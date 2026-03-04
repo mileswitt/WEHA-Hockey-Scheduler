@@ -1,11 +1,9 @@
 from flask import Flask, jsonify
-from flask_cors import CORS
 import pandas as pd
 import random
 import re
 
 app = Flask(__name__)
-CORS(app)
 
 # Load CSV
 df = pd.read_csv("anonymized.csv")
