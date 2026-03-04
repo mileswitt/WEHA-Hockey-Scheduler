@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Generator</title>
+</head>
+<body>
+    <h1>Team Generator</h1>
+
+    <button onclick="generateTeams()">Generate Teams</button>
+
+    <h2>Team 1</h2>
+    <ul id="team1"></ul>
+    <p id="avg1"></p>
+
+    <h2>Team 2</h2>
+    <ul id="team2"></ul>
+    <p id="avg2"></p>
+
+    <script>
+        function generateTeams() {
+            fetch("/generate-teams")
+                .then(response => response.json())
+                .then(data => {
+
+                    const team1List = document.getElementById("team1");
+                    const team2List = document.getElementById("team2");
+
+                    team1List.innerHTML = "";
+                    team2List.innerHTML = "";
+
+                    data.team1.forEach(player => {
+                        const li = document.createElement("li");
+                        li.textContent = player.name + " (" + player.experience + " yrs)";
+                        team1List.appendChild(li);
+                    });
+
+                    data.team2.forEach(player => {
+                        const li = document.createElement("li");
+                        li.textContent = player.name + " (" + player.experience + " yrs)";
+                        team2List.appendChild(li);
+                    });
+
+                    document.getElementById("avg1").textContent =
+                        "Average Experience: " + data.team1_avg_experience;
+
+                    document.getElementById("avg2").textContent =
+                        "Average Experience: " + data.team2_avg_experience;
+                });
+        }
+    </script>
+</body>
+</html>
