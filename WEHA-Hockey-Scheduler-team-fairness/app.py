@@ -7,7 +7,8 @@ import os
 app = Flask(__name__)
 
 # Load CSV
-df = pd.read_csv("anonymized.csv")
+CSV_PATH = os.path.join(os.path.dirname(__file__), "anonymized.csv")
+df = pd.read_csv(CSV_PATH)
 
 # clean the experience column
 def clean_years(val):
@@ -52,4 +53,5 @@ def generate_teams():
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
+
     app.run(host="0.0.0.0", port=port, debug=False)
