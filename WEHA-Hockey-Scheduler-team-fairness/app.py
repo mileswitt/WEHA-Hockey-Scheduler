@@ -1,57 +1,31 @@
-from flask import Flask, jsonify
-import pandas as pd
-import random
-import re
-import os
-
-app = Flask(__name__)
-
-# Load CSV
-CSV_PATH = os.path.join(os.path.dirname(__file__), "anonymized.csv")
-df = pd.read_csv(CSV_PATH)
-
-# clean the experience column
-def clean_years(val):
-    if pd.isna(val):
-        return 0
-    match = re.search(r"\d+", str(val))
-    return int(match.group()) if match else 0
-
-# create full name column
-df["name"] = df["First"] + " " + df["Last"]
-
-# clean experience column data
-df["experience"] = df["YEARS PLAYED"].apply(clean_years)
-
 @app.route("/generate-teams")
 def generate_teams():
     players = df[["name", "experience"]].to_dict(orient="records")
     random.shuffle(players)
 
-    team1 = []
-    team2 = []
+    n = len(players)
+    base_size = n // 4
+    max_sizes = [base_size + (1 if i < n % 4 else 0) for i in range(4)]
+
+    teams = [[], [], [], []]
 
     for player in players:
-        exp1 = sum(p["experience"] for p in team1)
-        exp2 = sum(p["experience"] for p in team2)
+        eligible = [(i, t) for i, t in enumerate(teams) if len(t) < max_sizes[i]]
+        chosen_i = min(eligible, key=lambda x: sum(p["experience"] for p in x[1]))[0]
+        teams[chosen_i].append(player)
 
-        if exp1 <= exp2:
-            team1.append(player)
-        else:
-            team2.append(player)
-
-    avg1 = round(sum(p["experience"] for p in team1) / len(team1), 2)
-    avg2 = round(sum(p["experience"] for p in team2) / len(team2), 2)
+    avgs = [
+        round(sum(p["experience"] for p in t) / len(t), 2) if t else 0
+        for t in teams
+    ]
 
     return jsonify({
-        "team1": team1,
-        "team2": team2,
-        "team1_avg_experience": avg1,
-        "team2_avg_experience": avg2
+        "team1": teams[0],
+        "team2": teams[1],
+        "team3": teams[2],
+        "team4": teams[3],
+        "team1_avg_experience": avgs[0],
+        "team2_avg_experience": avgs[1],
+        "team3_avg_experience": avgs[2],
+        "team4_avg_experience": avgs[3]
     })
-
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))
-
-    app.run(host="0.0.0.0", port=port, debug=False)
