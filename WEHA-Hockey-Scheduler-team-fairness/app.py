@@ -1,18 +1,43 @@
+from flask import Flask, jsonify, render_template
+import pandas as pd
+import random
+import re
+import os
+
+app = Flask(__name__)
+
+# Load CSV
+CSV_PATH = os.path.join(os.path.dirname(__file__), "anonymized.csv")
+df = pd.read_csv(CSV_PATH)
+
+def clean_years(val):
+    if pd.isna(val):
+        return 0
+    match = re.search(r"\d+", str(val))
+    return int(match.group()) if match else 0
+
+df["name"] = (df["First"].fillna("") + " " + df["Last"].fillna("")).str.strip()
+df["experience"] = df["YEARS PLAYED"].apply(clean_years)
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
 @app.route("/generate-teams")
 def generate_teams():
     players = df[["name", "experience"]].to_dict(orient="records")
     random.shuffle(players)
 
     n = len(players)
-    base_size = n // 4
-    max_sizes = [base_size + (1 if i < n % 4 else 0) for i in range(4)]
+    base = n // 4
+    sizes = [base + (1 if i < n % 4 else 0) for i in range(4)]
 
     teams = [[], [], [], []]
 
     for player in players:
-        eligible = [(i, t) for i, t in enumerate(teams) if len(t) < max_sizes[i]]
-        chosen_i = min(eligible, key=lambda x: sum(p["experience"] for p in x[1]))[0]
-        teams[chosen_i].append(player)
+        eligible = [(i, t) for i, t in enumerate(teams) if len(t) < sizes[i]]
+        idx = min(eligible, key=lambda x: sum(p["experience"] for p in x[1]))[0]
+        teams[idx].append(player)
 
     avgs = [
         round(sum(p["experience"] for p in t) / len(t), 2) if t else 0
@@ -29,3 +54,8 @@ def generate_teams():
         "team3_avg_experience": avgs[2],
         "team4_avg_experience": avgs[3]
     })
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
