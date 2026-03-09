@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Generator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .teams-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+        th { background-color: #2c6fad; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tfoot td { font-weight: bold; background-color: #e8e8e8; }
+    </style>
+</head>
+<body>
+    <h1>Team Generator</h1>
+    <button onclick="generateTeams()">Generate Teams</button>
+
+    <div class="teams-container">
+        <div>
+            <h2>Team 1</h2>
+            <table>
+                <thead><tr><th>#</th><th>Name</th><th>Experience (yrs)</th></tr></thead>
+                <tbody id="team1-body"></tbody>
+                <tfoot><tr><td colspan="2">Average Experience</td><td id="avg1"></td></tr></tfoot>
+            </table>
+        </div>
+        <div>
+            <h2>Team 2</h2>
+            <table>
+                <thead><tr><th>#</th><th>Name</th><th>Experience (yrs)</th></tr></thead>
+                <tbody id="team2-body"></tbody>
+                <tfoot><tr><td colspan="2">Average Experience</td><td id="avg2"></td></tr></tfoot>
+            </table>
+        </div>
+        <div>
+            <h2>Team 3</h2>
+            <table>
+                <thead><tr><th>#</th><th>Name</th><th>Experience (yrs)</th></tr></thead>
+                <tbody id="team3-body"></tbody>
+                <tfoot><tr><td colspan="2">Average Experience</td><td id="avg3"></td></tr></tfoot>
+            </table>
+        </div>
+        <div>
+            <h2>Team 4</h2>
+            <table>
+                <thead><tr><th>#</th><th>Name</th><th>Experience (yrs)</th></tr></thead>
+                <tbody id="team4-body"></tbody>
+                <tfoot><tr><td colspan="2">Average Experience</td><td id="avg4"></td></tr></tfoot>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function generateTeams() {
+            fetch("/generate-teams?_=" + Date.now())
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(t => { throw new Error("Server error " + response.status + ": " + t); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    [1, 2, 3, 4].forEach(n => {
+                        const tbody = document.getElementById("team" + n + "-body");
+                        tbody.innerHTML = "";
+                        data["team" + n].forEach((player, i) => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `<td>${i + 1}</td><td>${player.name}</td><td>${player.experience}</td>`;
+                            tbody.appendChild(row);
+                        });
+                        document.getElementById("avg" + n).textContent = data["team" + n + "_avg_experience"];
+                    });
+                })
+                .catch(err => {
+                    console.error("Failed to generate teams:", err);
+                    alert("Error generating teams: " + err.message);
+                });
+        }
+    </script>
+</body>
+</html>
