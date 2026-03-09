@@ -1,0 +1,40 @@
+# =====================
+# Logs
+# =====================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# =====================
+# Node / React / Vite
+# =====================
+node_modules/
+dist/
+dist-ssr/
+build/
+*.local
+
+# =====================
+# Python / Flask
+# =====================
+venv/
+.venv/
+__pycache__/
+*.pyc
+instance/
+.env
+
+# =====================
+# Editor / OS
+# =====================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
