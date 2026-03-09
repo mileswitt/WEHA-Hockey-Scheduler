@@ -8,17 +8,17 @@ app = Flask(__name__)
 # Load CSV
 df = pd.read_csv("anonymized.csv")
 
-# ---- CLEAN EXPERIENCE COLUMN ----
+# clean the experience column
 def clean_years(val):
     if pd.isna(val):
         return 0
     match = re.search(r"\d+", str(val))
     return int(match.group()) if match else 0
 
-# Create full name
+# create full name column
 df["name"] = df["First"] + " " + df["Last"]
 
-# Clean experience
+# clean experience column data
 df["experience"] = df["YEARS PLAYED"].apply(clean_years)
 
 @app.route("/generate-teams")
