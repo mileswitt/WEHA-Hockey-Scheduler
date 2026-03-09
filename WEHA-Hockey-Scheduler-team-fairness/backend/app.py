@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 
-# Load CSV using path relative to this script file
+# Load CSV
 CSV_PATH = os.path.join(os.path.dirname(__file__), "anonymized.csv")
 df = pd.read_csv(CSV_PATH)
 
@@ -17,7 +17,8 @@ def clean_years(val):
     return int(match.group()) if match else 0
 
 df["name"] = (df["First"].fillna("") + " " + df["Last"].fillna("")).str.strip()
-df = df[df["name"] != ""]  # drop rows with no name at all
+# drop rows with no name
+df = df[df["name"] != ""]  
 df["experience"] = df["YEARS PLAYED"].apply(clean_years)
 
 @app.route("/")
@@ -31,15 +32,15 @@ def generate_teams():
 
     n = len(players)
     base_size = n // 4
-    # Distribute remainder: first (n % 4) teams get one extra player
+    # Distribute remainder
     max_sizes = [base_size + (1 if i < n % 4 else 0) for i in range(4)]
 
     teams = [[], [], [], []]
 
     for player in players:
-        # Only assign to teams that still have room
+        # only assign to teams that still have room
         eligible = [(i, t) for i, t in enumerate(teams) if len(t) < max_sizes[i]]
-        # Pick the eligible team with the lowest total experience
+        # pick the  team with the lowest total experience
         chosen_i = min(eligible, key=lambda x: sum(p["experience"] for p in x[1]))[0]
         teams[chosen_i].append(player)
 
@@ -57,5 +58,8 @@ def generate_teams():
     response.headers["Cache-Control"] = "no-store"
     return response
 
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port, debug=False)
