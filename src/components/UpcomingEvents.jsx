@@ -18,7 +18,7 @@ export default function UpcomingEvents() {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:5000/generate/${division}`
+        `https://weha-hockey-scheduler-c9h3.onrender.com/generate/${division}`
       );
 
       const data = await response.json();
