@@ -1,0 +1,28 @@
+# Virtual environments
+.venv/
+.venv-1/
+venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Output / generated files
+*.csv
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Scrapy
+*.log
+.scrapy/
