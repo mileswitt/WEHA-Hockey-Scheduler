@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../assets/WEHAlogo.jpg";
 
 export default function Hero() {
@@ -8,7 +9,6 @@ export default function Hero() {
   return (
     <section className="relative w-full h-[550px] flex items-center justify-center text-white">
 
-      {/* Background */}
       <img
         src={Logo}
         alt="West Elk"
@@ -26,58 +26,54 @@ export default function Hero() {
           Wolverines Hockey Association
         </p>
 
-        {/* Navigation Pills */}
-        <div className="bg-[#a11c0b] rounded-full px-8 py-3 flex gap-8 justify-center shadow-xl relative">
+        <div className="bg-[#a11c0b] rounded-full px-8 py-3 inline-flex gap-8 justify-center shadow-xl">
 
-          {/* Team Schedule */}
+          {/* Team Schedule dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setTeamOpen(true)}
             onMouseLeave={() => setTeamOpen(false)}
           >
-            <button className="hover:text-red-500 transition">
+            <button className="hover:text-red-300 transition text-white">
               Team Schedule
             </button>
-
             {teamOpen && (
-              <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-44">
-                <ul className="space-y-2">
-                  <li className="hover:text-red-600 cursor-pointer">Varsity</li>
-                  <li className="hover:text-red-600 cursor-pointer">JV</li>
-                  <li className="hover:text-red-600 cursor-pointer">Youth</li>
+              <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-44 z-50">
+                <ul className="space-y-2 text-sm">
+                  <li className="hover:text-red-600 cursor-pointer py-1">Varsity</li>
+                  <li className="hover:text-red-600 cursor-pointer py-1">JV</li>
+                  <li className="hover:text-red-600 cursor-pointer py-1">Youth</li>
                 </ul>
               </div>
             )}
           </div>
 
-          {/* Game Schedule */}
+          {/* Game Schedule — routes to /schedule */}
           <div
             className="relative"
             onMouseEnter={() => setGameOpen(true)}
             onMouseLeave={() => setGameOpen(false)}
           >
-            <button className="hover:text-red-500 transition">
+            <Link to="/schedule" className="hover:text-red-300 transition text-white">
               Game Schedule
-            </button>
-
+            </Link>
             {gameOpen && (
-              <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-44">
-                <ul className="space-y-2">
-                  <li className="hover:text-red-600 cursor-pointer">Home Games</li>
-                  <li className="hover:text-red-600 cursor-pointer">Away Games</li>
-                  <li className="hover:text-red-600 cursor-pointer">Tournaments</li>
+              <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-48 z-50">
+                <ul className="space-y-2 text-sm">
+                  <li className="py-1">
+                    <Link to="/schedule" className="hover:text-red-600 block">
+                      League Calendar
+                    </Link>
+                  </li>
+                  <li className="hover:text-red-600 cursor-pointer py-1">Home Games</li>
+                  <li className="hover:text-red-600 cursor-pointer py-1">Away Games</li>
+                  <li className="hover:text-red-600 cursor-pointer py-1">Tournaments</li>
                 </ul>
               </div>
             )}
           </div>
 
-          {/* Locker (no dropdown) */}
-          <button className="hover:text-red-500 transition">
-            Locker Schedule
-          </button>
-
         </div>
-
       </div>
     </section>
   );

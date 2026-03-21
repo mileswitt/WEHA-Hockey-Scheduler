@@ -1,22 +1,15 @@
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import UpcomingEvents from "./components/UpcomingEvents";
-import WeeklyCalendar from "./components/WeeklyCalendar";
-import Footer from "./components/Footer";
+import { Routes, Route } from 'react-router-dom'
+import './App.css'
+import HomePage from './pages/HomePage'
+import LeagueCalendarPage from './pages/LeagueCalendarPage'
 
-export default function App() {
+function App() {
   return (
-    <div className="bg-[#0f2b46] min-h-screen">
-
-      <Navbar />
-
-      <Hero />
-
-      <div className="max-w-6xl mx-auto px-6 py-20">
-        <UpcomingEvents />
-        <WeeklyCalendar />
-      </div>
-
-    </div>
-  );
+    <Routes>
+      <Route path="/"         element={<HomePage />} />
+      <Route path="/schedule" element={<LeagueCalendarPage />} />
+    </Routes>
+  )
 }
+
+export default App
