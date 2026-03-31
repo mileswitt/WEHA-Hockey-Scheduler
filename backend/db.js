@@ -1,0 +1,24 @@
+const mysql = require('mysql2');
+//https://www.geeksforgeeks.org/node-js/how-to-use-connection-pooling-with-mysql-in-nodejs/
+// making a connection to the database with the credentials
+const connection = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "Chargers17#",
+  database: "weha_hockey_scheduler",
+  port: 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+});
+
+// error checking for the connection to the database
+connection.getConnection((err, connection) => {
+  if (err) {
+    console.error("Error connecting to the database:", err.message);
+    return;
+  }
+  console.log("Connected to the database");
+  connection.release();
+});
+
+module.exports = connection.promise();
