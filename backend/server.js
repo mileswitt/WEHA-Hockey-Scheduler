@@ -28,17 +28,53 @@ app.get("/api/schedule", async (req, res) => {
         gs.GameDate,
         gs.GameTime,
         gs.Rink,
-        l.Name AS LeagueName,
-        d.Name AS DivisionName,
-        ht.Wins    AS HomeWins,
-        ht.Losses  AS HomeLosses,
-        at.Wins    AS AwayWins,
-        at.Losses  AS AwayLosses
+        l.Name  AS LeagueName,
+        d.Name  AS DivisionName,
+        COALESCE((
+          SELECT t.Wins FROM Team t
+          WHERE t.Name = gs.HomeTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS HomeWins,
+        COALESCE((
+          SELECT t.Losses FROM Team t
+          WHERE t.Name = gs.HomeTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS HomeLosses,
+        COALESCE((
+          SELECT t.Ties FROM Team t
+          WHERE t.Name = gs.HomeTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS HomeTies,
+        COALESCE((
+          SELECT t.Wins FROM Team t
+          WHERE t.Name = gs.AwayTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS AwayWins,
+        COALESCE((
+          SELECT t.Losses FROM Team t
+          WHERE t.Name = gs.AwayTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS AwayLosses,
+        COALESCE((
+          SELECT t.Ties FROM Team t
+          WHERE t.Name = gs.AwayTeamName
+            AND t.LeagueID = gs.LeagueID
+            AND t.DivisionID = gs.DivisionID
+          LIMIT 1
+        ), 0) AS AwayTies
       FROM GameSchedule gs
-      JOIN League l   ON gs.LeagueID   = l.LeagueID
-      JOIN Division d ON gs.DivisionID = d.DivisionID
-      JOIN Team ht    ON ht.Name = gs.HomeTeamName AND ht.DivisionID = gs.DivisionID
-      JOIN Team at    ON at.Name = gs.AwayTeamName AND at.DivisionID = gs.DivisionID
+      JOIN League   l  ON gs.LeagueID   = l.LeagueID
+      JOIN Division d  ON gs.DivisionID = d.DivisionID
       WHERE gs.GameDate >= CURDATE()
       ORDER BY gs.GameDate ASC, gs.GameTime ASC
     `);

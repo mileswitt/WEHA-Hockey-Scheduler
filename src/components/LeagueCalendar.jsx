@@ -34,13 +34,13 @@ function GameModal({ event, onClose }) {
   const color = getDivColor(event.extendedProps.division);
 
   return (
-    // Dark overlay behind the modal — clicking it closes the modal
+    // Dark overlay behind the modal clicking it closes the modal
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-5"
       style={{ background: "rgba(0,0,0,0.78)" }}
       onClick={onClose}
     >
-      {/* Modal card — stopPropagation prevents clicks inside from closing it */}
+      {/* Modal card stopPropagation prevents clicks inside from closing it */}
       <div
         className="relative w-full max-w-lg rounded-md p-7 text-white overflow-y-auto"
         style={{
@@ -107,6 +107,11 @@ function GameModal({ event, onClose }) {
             <div className="text-xs text-white/40 mt-1" style={{ fontFamily: "system-ui,sans-serif" }}>
               Home
             </div>
+            <div className="flex justify-center items-center gap-3 mt-2">
+              <span className="text-xs text-white/40">{event.extendedProps.homeWins} W</span>
+              <span className="text-xs text-white/40">{event.extendedProps.homeLosses} L</span>
+              <span className="text-xs text-white/40">{event.extendedProps.homeTies} T</span>
+            </div>
           </div>
 
           {/* VS label between the two boxes */}
@@ -120,6 +125,11 @@ function GameModal({ event, onClose }) {
             <div className="text-sm tracking-wide">{event.extendedProps.away}</div>
             <div className="text-xs text-white/40 mt-1" style={{ fontFamily: "system-ui,sans-serif" }}>
               Away
+            </div>
+            <div className="flex justify-center items-center gap-3 mt-2">
+              <span className="text-xs text-white/40">{event.extendedProps.awayWins} W</span>
+              <span className="text-xs text-white/40">{event.extendedProps.awayLosses} L</span>
+              <span className="text-xs text-white/40">{event.extendedProps.awayTies} T</span>
             </div>
           </div>
         </div>
@@ -185,8 +195,10 @@ export default function LeagueCalendar() {
             rink:        game.Rink,
             homeWins:    game.HomeWins   ?? 0,
             homeLosses:  game.HomeLosses ?? 0,
+            homeTies:    game.HomeTies   ?? 0,   
             awayWins:    game.AwayWins   ?? 0,
             awayLosses:  game.AwayLosses ?? 0,
+            awayTies:    game.AwayTies   ?? 0,  
           },
         }));
 

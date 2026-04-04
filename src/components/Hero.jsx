@@ -40,9 +40,7 @@ export default function Hero() {
             {teamOpen && (
               <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-44 z-50">
                 <ul className="space-y-2 text-sm">
-                  <li className="hover:text-red-600 cursor-pointer py-1">Varsity</li>
-                  <li className="hover:text-red-600 cursor-pointer py-1">JV</li>
-                  <li className="hover:text-red-600 cursor-pointer py-1">Youth</li>
+
                 </ul>
               </div>
             )}
@@ -65,9 +63,7 @@ export default function Hero() {
                       League Calendar
                     </Link>
                   </li>
-                  <li className="hover:text-red-600 cursor-pointer py-1">Home Games</li>
-                  <li className="hover:text-red-600 cursor-pointer py-1">Away Games</li>
-                  <li className="hover:text-red-600 cursor-pointer py-1">Tournaments</li>
+                  
                 </ul>
               </div>
             )}
