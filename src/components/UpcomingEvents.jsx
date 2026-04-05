@@ -119,7 +119,7 @@ export default function UpcomingEvents() {
 
   // Fetch upcoming games on mount — only show first 6
   useEffect(() => {
-    fetch("http://localhost:5000/api/schedule")
+    fetch("https://weha-backend.onrender.com/api/schedule")
       .then(res => res.json())
       .then(data => {
         if (data.error)

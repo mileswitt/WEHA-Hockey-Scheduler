@@ -110,7 +110,7 @@ const WeeklyCalendar = () => {
 
   // Fetch schedule from backend on mount
   useEffect(() => {
-    fetch("http://localhost:5000/api/schedule")
+    fetch("https://weha-backend.onrender.com/api/schedule")
       .then(res => res.json())
       .then(data => {
         if (data.error)
