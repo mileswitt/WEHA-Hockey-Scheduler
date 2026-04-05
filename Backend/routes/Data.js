@@ -12,10 +12,10 @@ router.get("/getPlayers", async (req, res) => {
     const [rows] = await connectionPool.execute("SELECT * FROM Player LIMIT 100;");
     res.json(rows);
   }
-  catch(Error)
+  catch(error)
   {
-    console.log(`ERROR: ${Error}`);
-    res.status(500).json({ERROR: "Failed to Get Player Information"})
+    console.log(`ERROR: ${error.message}`);
+    res.status(500).json({ERROR: error.message})
   }
 });
 

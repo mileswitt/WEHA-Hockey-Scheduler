@@ -9,6 +9,7 @@ const connectionPool = mysql.createPool
     port: process.env.DB_PORT,
     waitForConnections: true,
     connectionLimit: 10, // allow up to 10 simultaneous connections to database at once
+    ssl: { rejectUnauthorized: true }, // Needed by TIDB Cloud
     queueLimit: 0
 });
 
