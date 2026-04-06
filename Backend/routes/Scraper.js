@@ -24,7 +24,7 @@ router.post("/runWebScrape", async(req, res) => {
 
             const pythonProcess = spawn(
             PythonPath,  // path to webscraper python in VENV
-            [WebScraperPath] // path to main.py of webscraper python script
+            ["-u", WebScraperPath] // -u disables Python output buffering so print() is visible immediately
             );
 
             // Standard Output:
@@ -35,7 +35,9 @@ router.post("/runWebScrape", async(req, res) => {
 
             // Standard ERROR Output:
             pythonProcess.stderr.on("data", (data) => {
-                scraperStatus.message = `WEB SCRAPING ERROR: ${data}`;
+                const errorMsg = `WEB SCRAPING ERROR: ${data}`;
+                console.error(errorMsg);
+                scraperStatus.message = errorMsg;
             });
 
             // close process after webscraping has ended

@@ -24,22 +24,15 @@ class MysqlModel():
             self.connection.commit()
 
     def InsertLeague(self, LeagueName):
-        # Check if the league id exists, this is so the auto_increment id is not incremented during multiple seasons league item yields
+        # INSERT IGNORE requires a UNIQUE constraint on League.Name in the DB schema.
+        # This is atomic and avoids the SELECT-then-INSERT race condition that caused
+        # duplicate league rows and gaps in LeagueID when the same league name appeared
+        # across multiple seasons.
         self.cursor.execute("""
-            SELECT LeagueID FROM League WHERE `Name` = %s
+            INSERT IGNORE INTO League (`Name`)
+            VALUES (%s)
         """, (LeagueName,))
-        resultLeagueName = self.cursor.fetchone() # Only fetch one leagues id number, with name equal to current web scrapers league name
-        
-        # If the league results return no values then the league name can be added to the database
-        if resultLeagueName is None:
-            self.cursor.execute("""
-                INSERT INTO League (`Name`)
-                VALUES (%s)
-            """, (LeagueName,))
-            self.connection.commit()
-        # Else the league result returns a value, meaning it is in the database already and doesn't need to be inserted
-        else:
-            pass
+        self.connection.commit()
 
     def InsertDivision(self, DivisionName, LeagueName):
         self.cursor.execute("""

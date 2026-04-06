@@ -5,6 +5,14 @@ Created on Mon Mar  9 13:29:06 2026
 @author: djibr
 """
 
+# Must be installed before any other Twisted/Scrapy imports.
+# Spiders use `async def start()` which requires the asyncio reactor.
+# Windows defaults to ProactorEventLoop which Twisted doesn't support — switch to SelectorEventLoop first.
+import asyncio
+asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+from twisted.internet import asyncioreactor
+asyncioreactor.install()
+
 from HelperClasses.SearchSeason import SearchSeason
 from HelperClasses.RunSpiders import RunSpiders
 
