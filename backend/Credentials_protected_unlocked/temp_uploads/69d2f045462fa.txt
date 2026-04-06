@@ -1,0 +1,5 @@
+DB_HOST=gateway01.us-west-2.prod.aws.tidbcloud.com
+DB_USER=2ESj56VEZaEWJBD.root
+DB_PASSWORD=Jr00L7TeQ6D2KNQg # this is for TIDB Clouds Password
+DB_NAME=weha_hockey_scheduler
+DB_PORT=4000

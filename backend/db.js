@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 //https://www.geeksforgeeks.org/node-js/how-to-use-connection-pooling-with-mysql-in-nodejs/
 // making a connection to the database with the credentials
 // const connection = mysql.createPool({
@@ -16,9 +17,14 @@ const connection = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
+  port: process.env.DB_PORT || 4000,
   waitForConnections: true,
   connectionLimit: 10,
+  //TiDB cloud requires SSL connection
+  ssl: {
+    minVersion: 'TLSv1.2',
+    rejectUnauthorized: true,
+  },
 });
 
 // error checking for the connection to the database
