@@ -167,7 +167,7 @@ export default function LeagueCalendar() {
 
   // Fetch game schedule from backend when component first loads
   useEffect(() => {
-    fetch("https://weha-backend.onrender.com/api/schedule")
+    fetch("https://weha-backend.onrender.com/api/all-schedules")
       .then(res => res.json())
       .then(data => {
         // If backend returned an error object, show it
