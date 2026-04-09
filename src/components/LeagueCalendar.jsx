@@ -2,6 +2,7 @@
 // ─── Place at: src/components/LeagueCalendar.jsx
 
 import { useState, useEffect } from "react";
+import { fetchAllSchedules } from "../api/fetchApiData";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -166,58 +167,40 @@ export default function LeagueCalendar() {
   const [error, setError] = useState(null);
 
   // Fetch game schedule from backend when component first loads
-  useEffect(() => {
-    fetch("https://weha-backend.onrender.com/api/all-schedules")
-      .then(res => res.json())
-      .then(data => {
-        // If backend returned an error object, show it
-        if (data.error)
-        {
-          setError(data.error);
-          return;
-        }
-
-        // Convert each DB row into a FullCalendar event object
-        const calendarEvents = data.map(game => ({
-          id:              String(game.GameID),
-          title:           `${game.HomeTeamName} vs ${game.AwayTeamName}`,
-          start:           game.GameDate.split("T")[0], // strip timezone, keep YYYY-MM-DD
-          backgroundColor: getDivColor(game.DivisionName), // color by division
-          borderColor:     "transparent",
-          textColor:       "#fff",
-          // extendedProps stores extra data shown in the modal
-          extendedProps: {
-            league:      game.LeagueName,
-            division:    game.DivisionName,
-            home:        game.HomeTeamName,
-            away:        game.AwayTeamName,
-            time:        game.GameTime,
-            rink:        game.Rink,
-            homeWins:    game.HomeWins   ?? 0,
-            homeLosses:  game.HomeLosses ?? 0,
-            homeTies:    game.HomeTies   ?? 0,   
-            awayWins:    game.AwayWins   ?? 0,
-            awayLosses:  game.AwayLosses ?? 0,
-            awayTies:    game.AwayTies   ?? 0,  
-          },
-        }));
-
-        setEvents(calendarEvents);
-
-        // Build filter button lists dynamically from the actual data
-        // Set removes duplicates, spread into array, prepend "All" option
-        const uniqueLeagues   = ["All Leagues",   ...new Set(data.map(g => g.LeagueName))];
-        const uniqueDivisions = ["All Divisions", ...new Set(data.map(g => g.DivisionName))];
-        setLeagues(uniqueLeagues);
-        setDivisions(uniqueDivisions);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching schedule:", err);
-        setError("Failed to load schedule");
-        setLoading(false);
-      });
-  }, []); // empty array = only runs once on mount
+useEffect(() => {
+  fetchAllSchedules()
+    .then(data => {
+      const calendarEvents = data.map(game => ({
+        id:              game.GameID,
+        title:           `${game.HomeTeamName} vs ${game.AwayTeamName}`,
+        start:           game.GameDate,
+        backgroundColor: getDivColor(game.DivisionName),
+        borderColor:     "transparent",
+        textColor:       "#fff",
+        extendedProps: {
+          league:      game.LeagueName,
+          division:    game.DivisionName,
+          home:        game.HomeTeamName,
+          away:        game.AwayTeamName,
+          time:        game.GameTime,
+          rink:        game.Rink,
+          homeWins:    game.HomeWins,
+          homeLosses:  game.HomeLosses,
+          homeTies:    game.HomeTies,
+          awayWins:    game.AwayWins,
+          awayLosses:  game.AwayLosses,
+          awayTies:    game.AwayTies,
+        },
+      }));
+      setEvents(calendarEvents);
+      const uniqueLeagues   = ["All Leagues",   ...new Set(data.map(g => g.LeagueName))];
+      const uniqueDivisions = ["All Divisions", ...new Set(data.map(g => g.DivisionName))];
+      setLeagues(uniqueLeagues);
+      setDivisions(uniqueDivisions);
+      setLoading(false);
+    })
+    .catch(() => { setError("Failed to load schedule"); setLoading(false); });
+  }, []);
 
   // Filter displayed events based on active league and division selections
   const filteredEvents = events.filter(e => {

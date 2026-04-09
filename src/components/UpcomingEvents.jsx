@@ -3,6 +3,7 @@
 // Also allows generating a schedule for a selected division
 
 import { useState, useEffect } from "react";
+import { fetchAllSchedules } from "../api/fetchApiData";
 
 export default function UpcomingEvents() {
   // Stores upcoming games from /api/schedule
@@ -12,24 +13,12 @@ export default function UpcomingEvents() {
 
   // Fetch upcoming games on mount — only show first 6
   useEffect(() => {
-    fetch("https://weha-backend.onrender.com/api/all-schedules")
-      .then(res => res.json())
-      .then(data => {
-        if (data.error)
-        {
-          setError(data.error);
-          setLoading(false);
-          return;
-        }
-        // Only take the first 6 games
-        setGames(data.slice(0, 6));
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching games:", err);
-        setError("Failed to load games");
-        setLoading(false);
-      });
+  fetchAllSchedules()
+    .then(data => {
+      setGames(data.slice(0, 6));
+      setLoading(false);
+    })
+    .catch(() => { setError("Failed to load games"); setLoading(false); });
   }, []);
 
   // Format date from "2026-04-01T06:00:00.000Z" to "Apr 1"

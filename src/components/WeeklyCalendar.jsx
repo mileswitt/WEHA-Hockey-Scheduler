@@ -2,6 +2,7 @@
 // import timeGridPlugin from "@fullcalendar/timegrid";
 // import interactionPlugin from "@fullcalendar/interaction";
 
+
 // const WeeklyCalendar = () => {
 //   return (
 //     <div style={{
@@ -81,6 +82,7 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import { fetchAllSchedules } from "../api/fetchApiData";
 
 // Division colors — matches LeagueCalendar for consistency
 const DIVISION_COLORS = {
@@ -110,40 +112,24 @@ const WeeklyCalendar = () => {
 
   // Fetch schedule from backend on mount
   useEffect(() => {
-    fetch("https://weha-backend.onrender.com/api/all-schedules")
-      .then(res => res.json())
-      .then(data => {
-        if (data.error)
-        {
-          setError(data.error);
-          setLoading(false);
-          return;
-        }
-
-        // Convert each DB game row into a FullCalendar timeGrid event
-        // Combines GameDate + GameTime into a full datetime string
-        const calendarEvents = data.map(game => ({
-          id:    String(game.GameID),
-          title: `${game.HomeTeamName} vs ${game.AwayTeamName}`,
-          // e.g. "2026-04-01T18:00:00"
-          start: `${game.GameDate.split("T")[0]}T${game.GameTime}`,
-          color: getDivColor(game.DivisionName),
-          extendedProps: {
-            league:   game.LeagueName,
-            division: game.DivisionName,
-            rink:     game.Rink,
-          },
-        }));
-
-        setEvents(calendarEvents);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error fetching weekly schedule:", err);
-        setError("Failed to load schedule");
-        setLoading(false);
-      });
-  }, []); // empty array = only runs once when component mounts
+  fetchAllSchedules()
+    .then(data => {
+      const calendarEvents = data.map(game => ({
+        id:    game.GameID,
+        title: `${game.HomeTeamName} vs ${game.AwayTeamName}`,
+        start: `${game.GameDate}T${game.GameTime}`,
+        color: getDivColor(game.DivisionName),
+        extendedProps: {
+          league:   game.LeagueName,
+          division: game.DivisionName,
+          rink:     game.Rink,
+        },
+      }));
+      setEvents(calendarEvents);
+      setLoading(false);
+    })
+    .catch(() => { setError("Failed to load"); setLoading(false); });
+  }, []);
 
   return (
     <div style={{
