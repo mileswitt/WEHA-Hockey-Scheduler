@@ -24,22 +24,15 @@ class MysqlModel():
             self.connection.commit()
 
     def InsertLeague(self, LeagueName):
-        # Check if the league id exists, this is so the auto_increment id is not incremented during multiple seasons league item yields
+        # INSERT IGNORE requires a UNIQUE constraint on League.Name in the DB schema.
+        # This is atomic and avoids the SELECT-then-INSERT race condition that caused
+        # duplicate league rows and gaps in LeagueID when the same league name appeared
+        # across multiple seasons.
         self.cursor.execute("""
-            SELECT LeagueID FROM League WHERE `Name` = %s
+            INSERT IGNORE INTO League (`Name`)
+            VALUES (%s)
         """, (LeagueName,))
-        resultLeagueName = self.cursor.fetchone() # Only fetch one leagues id number, with name equal to current web scrapers league name
-        
-        # If the league results return no values then the league name can be added to the database
-        if resultLeagueName is None:
-            self.cursor.execute("""
-                INSERT INTO League (`Name`)
-                VALUES (%s)
-            """, (LeagueName,))
-            self.connection.commit()
-        # Else the league result returns a value, meaning it is in the database already and doesn't need to be inserted
-        else:
-            pass
+        self.connection.commit()
 
     def InsertDivision(self, DivisionName, LeagueName):
         self.cursor.execute("""
@@ -68,7 +61,7 @@ class MysqlModel():
             else:
                 pass
 
-    def InsertTeam(self, teamId, divisionName, leagueName, teamName, wins, loses, ties, gamesPlayed):
+    def InsertTeam(self, teamId, divisionName, leagueName, teamName, wins, losses, ties, gamesPlayed):
         self.cursor.execute("SELECT LeagueID FROM League WHERE `Name` = %s",(leagueName,))
         resultLeague = self.cursor.fetchone()
         self.cursor.execute("SELECT DivisionID FROM Division WHERE `Name` = %s and LeagueID = %s",(divisionName,resultLeague[0]))
@@ -88,9 +81,9 @@ class MysqlModel():
             # If teamName is not in database insert team
             if resultTeamName is None:
                 self.cursor.execute("""
-                    INSERT INTO Team(TeamID, DivisionID, LeagueID, `Name`, Wins, Loses, Ties, GamesPlayed)
+                    INSERT INTO Team(TeamID, DivisionID, LeagueID, `Name`, Wins, Losses, Ties, GamesPlayed)
                     VALUES(%s, %s, %s, %s, %s, %s, %s ,%s)
-                """,(teamId ,getDivisionId ,getLeagueId ,teamName ,wins ,loses, ties, gamesPlayed))
+                """,(teamId ,getDivisionId ,getLeagueId ,teamName ,wins ,losses, ties, gamesPlayed))
                 self.connection.commit()
 
             # Else don't add to the team table and instead update current database values
@@ -99,7 +92,7 @@ class MysqlModel():
                     UPDATE Team
                     SET wins=%s ,loses=%s ,ties=%s ,GamesPlayed=%s
                     WHERE TeamID = %s
-                """,(wins, loses, ties, gamesPlayed, teamId))
+                """,(wins, losses, ties, gamesPlayed, teamId))
                 self.connection.commit()
     def InsertSeason(self, seasonId, seasonName, leagueName):
         self.cursor.execute("SELECT LeagueID FROM League WHERE `Name` = %s",(leagueName,))

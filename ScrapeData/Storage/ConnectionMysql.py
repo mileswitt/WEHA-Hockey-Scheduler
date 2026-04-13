@@ -13,7 +13,9 @@ class Connection():
                 user=os.getenv("DB_USER"),
                 password=os.getenv("DB_PASSWORD"),
                 database=os.getenv("DB_NAME"),
-                port=int(os.getenv("DB_PORT"))
+                port=int(os.getenv("DB_PORT")),
+                ssl_verify_cert=True,  # TIDB Cloud Requires
+                ssl_verify_identity=True  # TIDB Cloud Requires
             )
             cursor = conn.cursor()
             return conn, cursor

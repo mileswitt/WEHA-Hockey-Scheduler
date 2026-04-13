@@ -1,4 +1,4 @@
-// This class is where game and player information that is supposed to be public
+// This class is where game and player information that is supposed to be public 
 // is displayed to the front end
 
 const express = require("express");

@@ -72,7 +72,7 @@ class GamesSpider(scrapy.Spider):
                     teamId = teamTitles[j]["id"]
                     gamesPlayed = tableTeamData["gp"][j]
                     wins = tableTeamData["w"][j]   
-                    loses = tableTeamData["l"][j]
+                    losses = tableTeamData["l"][j]
                     ties = tableTeamData["t"][j]
                     # print(f"Team {teamId}: {teamName}, Wins: {wins}, Loses: {loses}, Ties: {ties}, Games Played: {gamesPlayed}")
                     
@@ -84,7 +84,7 @@ class GamesSpider(scrapy.Spider):
                         "teamName": teamName,
                         "teamId": teamId,
                         "wins": wins,
-                        "loses": loses,
+                        "losses": losses,
                         "ties": ties,
                         "gamesPlayed": gamesPlayed
                     }

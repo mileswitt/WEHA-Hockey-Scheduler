@@ -6,8 +6,8 @@ const router = express.Router();
 const path = require("path");
 
 // __dirname gets the absolute file path of the current directory
-const PythonPath = path.join(__dirname, "../../ScrapeData/.venv/Scripts/python.exe");
-const WebScraperPath = path.join(__dirname, "../../ScrapeData/main.py");
+const PythonPath = path.join(__dirname, "../../.venv/Scripts/python.exe");
+const WebScraperPath = path.join(__dirname, "../../main.py");
 
 var scraperStatus = {running: false, success: false, message: ""} // object to track webscraper status during run of python script
 
@@ -24,8 +24,8 @@ router.post("/runWebScrape", async(req, res) => {
 
             const pythonProcess = spawn(
             PythonPath,  // path to webscraper python in VENV
-            [WebScraperPath] // path to main.py of webscraper python script
-            ); 
+            ["-u", WebScraperPath] // -u disables Python output buffering so print() is visible immediately
+            );
 
             // Standard Output:
             // print webscraping output here:
@@ -35,7 +35,9 @@ router.post("/runWebScrape", async(req, res) => {
 
             // Standard ERROR Output:
             pythonProcess.stderr.on("data", (data) => {
-                scraperStatus.message = `WEB SCRAPING ERROR: ${data}`;
+                const errorMsg = `WEB SCRAPING ERROR: ${data}`;
+                console.error(errorMsg);
+                scraperStatus.message = errorMsg;
             });
 
             // close process after webscraping has ended
@@ -54,7 +56,7 @@ router.post("/runWebScrape", async(req, res) => {
         // else, it is running send message back to user giving current status of webscraper
         else
         {
-            scraperStatus.message = "Web Scraper Is Currently Running..."; // Send message to let user know when web scraper is runnning 
+            scraperStatus.message = "Web Scraper Is Currently Running..."; // Send message to let user know when web scraper is runnning
             res.json({scraperStatus}); // return current status of webscraping operation
         }
     }
@@ -64,7 +66,7 @@ router.post("/runWebScrape", async(req, res) => {
     }
 });
 
-// Idea is to poll this enpoint every 
+// Idea is to poll this endpoint every 5 seconds to ensure data is up to date
 router.get("/webScrapeStatus", (req, res) =>{
    res.json({scraperStatus}) // Show current web scraper status using web scraper info object
 });

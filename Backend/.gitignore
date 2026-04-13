@@ -1,0 +1,11 @@
+# Environmental Variables
+.env
+
+# Python Virtual Environment Folder
+.venv
+
+# NPM Modules
+node_modules/
+
+# VScode Workspaces
+*.code-workspace

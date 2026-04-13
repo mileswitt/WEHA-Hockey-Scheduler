@@ -4,6 +4,8 @@ class MysqlStorage():
     def open_spider(self, spider):
         # Initialize Mysql Model
         self.Model = MysqlModel()
+        if self.Model.connection is None:
+            raise RuntimeError("Failed to connect to MySQL database — check credentials and SSL config")
         print("Connected to Mysql Database")
 
     # This function handles taking what the web scraping spiders found and extracting them from the item dictionary from each spiders yield objects
@@ -43,7 +45,7 @@ class MysqlStorage():
                         leagueName=extractedItem.get("leagueName"),
                         teamName=extractedItem.get("teamName"),
                         wins=extractedItem.get("wins"),
-                        loses=extractedItem.get("loses"),
+                        losses=extractedItem.get("losses"),
                         ties=extractedItem.get("ties"),
                         gamesPlayed=extractedItem.get("gamesPlayed")
                     )

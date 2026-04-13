@@ -25,10 +25,10 @@ Thumbs.db
 
 # Environmental Variables
 .env
+Backend/.env
 
 # VScode Workspaces
 *.code-workspace
 
 # Node (Backend)
 Backend/node_modules/
-Backend/package-lock.json
