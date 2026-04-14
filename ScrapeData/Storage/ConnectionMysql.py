@@ -14,8 +14,8 @@ class Connection():
                 password=os.getenv("DB_PASSWORD"),
                 database=os.getenv("DB_NAME"),
                 port=int(os.getenv("DB_PORT")),
-                ssl_verify_cert=True,  # TIDB Cloud Requires
-                ssl_verify_identity=True  # TIDB Cloud Requires
+                ssl_verify_cert=False,  # Disabled to allow self-signed certs
+                ssl_verify_identity=False
             )
             cursor = conn.cursor()
             return conn, cursor
@@ -24,9 +24,12 @@ class Connection():
         return None, None
     def MysqlDisconnect(self, conn, cursor):
         try:
-            conn.commit()
-            cursor.close()
-            conn.close()
+            if conn is not None:
+                conn.commit()
+            if cursor is not None:
+                cursor.close()
+            if conn is not None:
+                conn.close()
         except Exception as e:
-            print(f"ERROR: {e}")   
-        return None, None 
+            print(f"ERROR: {e}")
+        return None, None

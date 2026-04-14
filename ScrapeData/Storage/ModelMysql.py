@@ -90,7 +90,7 @@ class MysqlModel():
             else:
                 self.cursor.execute("""
                     UPDATE Team
-                    SET wins=%s ,loses=%s ,ties=%s ,GamesPlayed=%s
+                    SET wins=%s ,losses=%s ,ties=%s ,GamesPlayed=%s
                     WHERE TeamID = %s
                 """,(wins, losses, ties, gamesPlayed, teamId))
                 self.connection.commit()

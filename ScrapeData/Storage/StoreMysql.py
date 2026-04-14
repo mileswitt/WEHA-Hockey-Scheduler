@@ -5,12 +5,12 @@ class MysqlStorage():
         # Initialize Mysql Model
         self.Model = MysqlModel()
         if self.Model.connection is None:
-            raise RuntimeError("Failed to connect to MySQL database — check credentials and SSL config")
+            raise RuntimeError("Failed to Connect to MySQL Database")
         print("Connected to Mysql Database")
 
     # This function handles taking what the web scraping spiders found and extracting them from the item dictionary from each spiders yield objects
     # After the fields are extracted they are used to determine what kind of item is found for inserting into the correct database tables
-    def process_item(self, item, spider):
+    def process_item(self, item, spider=None):
         extractedItem = dict(item)
         try:
             match(extractedItem.get("itemType")):
@@ -59,6 +59,6 @@ class MysqlStorage():
             print(f"ERROR: {e}")
             raise e
         return item
-    def close_spider(self, spider):
+    def close_spider(self, spider=None):
         self.Model.DisconnectDB()
         print("Disconnected From Database")

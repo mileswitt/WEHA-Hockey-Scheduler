@@ -6,8 +6,8 @@ const router = express.Router();
 const path = require("path");
 
 // __dirname gets the absolute file path of the current directory
-const PythonPath = path.join(__dirname, "../../ScrapeData/.venv/Scripts/python.exe");
-const WebScraperPath = path.join(__dirname, "../../ScrapeData/main.py");
+const PythonPath = path.join(__dirname, process.env.PYTHON_VENV_PATH);
+const WebScraperPath = path.join(__dirname, process.env.WEBSCRAPER_PATH);
 
 var scraperStatus = {running: false, success: false, message: ""} // object to track webscraper status during run of python script
 
@@ -20,34 +20,51 @@ router.post("/runWebScrape", async(req, res) => {
             scraperStatus.running = true;
             scraperStatus.message = "Starting Web Scraper";
 
+            console.log(`Starting web scraper...`);
+            console.log(`Python: ${PythonPath}`);
+            console.log(`Script: ${WebScraperPath}`);
+
             res.json({scraperStatus}); // send response of server starting to client
 
             const pythonProcess = spawn(
             PythonPath,  // path to webscraper python in VENV
-            [WebScraperPath] // path to main.py of webscraper python script
-            ); 
+            ["-u", WebScraperPath] // -u disables Python output buffering so stdout is flushed in real time
+            );
+
+            // Spawn error (e.g. python.exe not found)
+            pythonProcess.on("error", (err) => {
+                console.log(`SPAWN ERROR: ${err.message}`);
+                scraperStatus.running = false;
+                scraperStatus.success = false;
+                scraperStatus.message = `Spawn Error: ${err.message}`;
+            });
 
             // Standard Output:
-            // print webscraping output here:
             pythonProcess.stdout.on("data", (data) => {
-                console.log(`WEB SCRAPING OUTPUT: \n${data}`);
+                const output = data.toString().trim();
+                if (output) {
+                    console.log(`WEB SCRAPING OUTPUT: ${output}`);
+                    scraperStatus.message = output;
+                }
             });
 
             // Standard ERROR Output:
+            let stderrBuffer = "";
             pythonProcess.stderr.on("data", (data) => {
-                scraperStatus.message = `WEB SCRAPING ERROR: ${data}`;
+                stderrBuffer += data;
             });
 
             // close process after webscraping has ended
             pythonProcess.on("close", (code) => {
+                console.log(`Web scraper exited with code ${code}`);
+                scraperStatus.running = false;
                 if (code === 0) {
-                    scraperStatus.success = true; // set success flag to true
-                    scraperStatus.message = "Web Scraper Finished Successfully"; // set success message
-                    scraperStatus.running = false; // set running back to false since the web scraper is done with retrieving data
+                    scraperStatus.success = true;
+                    scraperStatus.message = "Web Scraper Finished Successfully";
                 } else {
-                    scraperStatus.success = false // set failure flag
-                    scraperStatus.message = "Web Scraping Failed"; // set failure message
-                    scraperStatus.running = false; // since running web scraper failed, running has stoped
+                    scraperStatus.success = false;
+                    scraperStatus.message = `Web Scraping Failed (exit code ${code}): ${stderrBuffer}`;
+                    console.log(`STDERR: ${stderrBuffer}`);
                 }
             });
         }

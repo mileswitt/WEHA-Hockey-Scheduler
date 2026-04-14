@@ -1,4 +1,5 @@
 
+require("dotenv").config();
 const dataRouting = require("./routes/Data");
 const webScraperRouting = require("./routes/Scraper");
 
