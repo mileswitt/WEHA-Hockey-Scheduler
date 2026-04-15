@@ -1,6 +1,7 @@
 # WEHA Hockey Scheduler
 
 ## File Structure
+```
 WEHA-Hockey-Scheduler/
 ├── venv/               <- Python virtual environment (you create this)
 ├── Backend/            <- Node.js Express server
@@ -11,7 +12,7 @@ WEHA-Hockey-Scheduler/
     ├── .env            <- Scraper DB credentials (you create this)
     ├── .env.example    <- Template for .env
     └── requirements.txt
-
+```
 ---
 
 ## Setup 
