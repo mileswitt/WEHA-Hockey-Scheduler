@@ -1,8 +1,6 @@
 # WEHA Hockey Scheduler
 
-## Project Structure
-
-```
+## File Structure
 WEHA-Hockey-Scheduler/
 ├── venv/               <- Python virtual environment (you create this)
 ├── Backend/            <- Node.js Express server
@@ -13,7 +11,6 @@ WEHA-Hockey-Scheduler/
     ├── .env            <- Scraper DB credentials (you create this)
     ├── .env.example    <- Template for .env
     └── requirements.txt
-```
 
 ---
 
@@ -24,7 +21,7 @@ WEHA-Hockey-Scheduler/
 
 From the **`WEHA-Hockey-Scheduler/`** root directory (not inside `ScrapeData`):
 
-```powershell
+```CMD Terminal
 cd WEHA-Hockey-Scheduler
 python -m venv venv
 ```
@@ -33,7 +30,7 @@ python -m venv venv
 
 ### Step 2 — Install Python Dependencies
 
-```powershell
+```CMD Terminal
 venv\Scripts\pip install -r ScrapeData\requirements.txt
 ```
 
@@ -43,7 +40,7 @@ venv\Scripts\pip install -r ScrapeData\requirements.txt
 
 Copy the example file and fill in your database credentials:
 
-```powershell
+```CMD Terminal
 copy ScrapeData\.env.example ScrapeData\.env
 ```
 
@@ -61,9 +58,10 @@ DB_PORT=3306
 
 ### Step 4 — Install Node.js Dependencies
 
+```CMD Terminal
 cd Backend
 npm install
-
+```
 
 ### Step 5 — Create the Backend `.env` File
 
@@ -88,8 +86,9 @@ WEBSCRAPER_PATH=../../ScrapeData/main.py <- path to script to run for webscrapin
 
 From the `Backend/` directory in a terminal run:
 
+```CMD Terminal
 node index.js
-
+```
 
 Output Should be:
 ```
