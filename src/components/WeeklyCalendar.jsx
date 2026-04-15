@@ -82,7 +82,7 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { fetchAllSchedules } from "../api/fetchApiData";
+import { fetchGames } from "../api/fetchApiData";
 
 // Division colors — matches LeagueCalendar for consistency
 const DIVISION_COLORS = {
@@ -112,23 +112,26 @@ const WeeklyCalendar = () => {
 
   // Fetch schedule from backend on mount
   useEffect(() => {
-  fetchAllSchedules()
-    .then(data => {
-      const calendarEvents = data.map(game => ({
-        id:    game.GameID,
-        title: `${game.HomeTeamName} vs ${game.AwayTeamName}`,
-        start: `${game.GameDate}T${game.GameTime}`,
-        color: getDivColor(game.DivisionName),
-        extendedProps: {
-          league:   game.LeagueName,
-          division: game.DivisionName,
-          rink:     game.Rink,
-        },
-      }));
-      setEvents(calendarEvents);
-      setLoading(false);
-    })
-    .catch(() => { setError("Failed to load"); setLoading(false); });
+    fetchGames()
+      .then(data => {
+        const calendarEvents = data.map(game => ({
+          id:    String(game.GameID),
+          title: `${game.HomeTeamName} vs ${game.AwayTeamName}`,
+          start: `${game.GameDate.split("T")[0]}T${game.GameTime}`,
+          color: getDivColor(game.DivisionName),
+          extendedProps: {
+            league:   game.LeagueName,
+            division: game.DivisionName,
+            rink:     game.RinkLocation,
+          },
+        }));
+        setEvents(calendarEvents);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load schedule");
+        setLoading(false);
+      });
   }, []);
 
   return (

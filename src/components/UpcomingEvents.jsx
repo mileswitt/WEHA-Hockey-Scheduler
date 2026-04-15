@@ -3,7 +3,7 @@
 // Also allows generating a schedule for a selected division
 
 import { useState, useEffect } from "react";
-import { fetchAllSchedules } from "../api/fetchApiData";
+import { fetchGames } from "../api/fetchApiData";
 
 export default function UpcomingEvents() {
   // Stores upcoming games from /api/schedule
@@ -11,14 +11,18 @@ export default function UpcomingEvents() {
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState(null);
 
-  // Fetch upcoming games on mount — only show first 6
+
+  // Fetch games from game table on mount — only show first 6
   useEffect(() => {
-  fetchAllSchedules()
-    .then(data => {
-      setGames(data.slice(0, 6));
-      setLoading(false);
-    })
-    .catch(() => { setError("Failed to load games"); setLoading(false); });
+    fetchGames()
+      .then(data => {
+        setGames(data.slice(0, 6));
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load games");
+        setLoading(false);
+      });
   }, []);
 
   // Format date from "2026-04-01T06:00:00.000Z" to "Apr 1"
@@ -83,7 +87,7 @@ export default function UpcomingEvents() {
                 date={formatDate(game.GameDate)}
                 team={`${game.HomeTeamName} vs ${game.AwayTeamName}`}
                 time={formatTime(game.GameTime)}
-                rink={game.Rink}
+                rink={game.RinkLocation}
               />
             ))}
           </div>

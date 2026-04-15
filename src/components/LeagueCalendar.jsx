@@ -2,7 +2,7 @@
 // ─── Place at: src/components/LeagueCalendar.jsx
 
 import { useState, useEffect } from "react";
-import { fetchAllSchedules } from "../api/fetchApiData";
+import { fetchGames } from "../api/fetchApiData";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -48,6 +48,7 @@ function GameModal({ event, onClose }) {
           background: "#0d1b2a",
           boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
           maxHeight: "88vh",
+          border: "5px solid rgba(255,255,255,0.7)",
           fontFamily: "'Bebas Neue', Impact, sans-serif",
         }}
         onClick={e => e.stopPropagation()}
@@ -62,9 +63,9 @@ function GameModal({ event, onClose }) {
         </button>
 
         {/* Division and league badge pills */}
-        <div className="flex gap-2 mb-3">
+        <div className="text-center mb-3 flex-wrap">
           <span
-            className="text-xs px-2 py-1 rounded text-white tracking-widest"
+            className="text-xs px-2 py-1 self-center g text-white tracking-widest"
             style={{ background: color }}
           >
             {event.extendedProps.division}
@@ -78,22 +79,22 @@ function GameModal({ event, onClose }) {
         </div>
 
         {/* Home team name */}
-        <h2 className="text-xl tracking-wide leading-tight mb-1">
+        <h2 className="text-center tracking-wide leading-tight mb-1">
           {event.extendedProps.home}
         </h2>
 
         {/* VS separator */}
-        <p className="text-xs text-white/50 mb-1" style={{ fontFamily: "system-ui,sans-serif" }}>
+        <p className="text-center text-white/50 mb-1" style={{ fontFamily: "system-ui,sans-serif" }}>
           vs
         </p>
 
         {/* Away team name */}
-        <h2 className="text-xl tracking-wide leading-tight mb-1">
+        <h2 className="text-center tracking-wide leading-tight mb-1">
           {event.extendedProps.away}
         </h2>
 
         {/* Game time and rink location */}
-        <p className="text-xs text-white/50 mb-5" style={{ fontFamily: "system-ui,sans-serif" }}>
+        <p className="text-center text-white/50 mb-5" style={{ fontFamily: "system-ui,sans-serif" }}>
           {event.extendedProps.time} · {event.extendedProps.rink}
         </p>
 
@@ -168,38 +169,44 @@ export default function LeagueCalendar() {
 
   // Fetch game schedule from backend when component first loads
 useEffect(() => {
-  fetchAllSchedules()
-    .then(data => {
-      const calendarEvents = data.map(game => ({
-        id:              game.GameID,
-        title:           `${game.HomeTeamName} vs ${game.AwayTeamName}`,
-        start:           game.GameDate,
-        backgroundColor: getDivColor(game.DivisionName),
-        borderColor:     "transparent",
-        textColor:       "#fff",
-        extendedProps: {
-          league:      game.LeagueName,
-          division:    game.DivisionName,
-          home:        game.HomeTeamName,
-          away:        game.AwayTeamName,
-          time:        game.GameTime,
-          rink:        game.Rink,
-          homeWins:    game.HomeWins,
-          homeLosses:  game.HomeLosses,
-          homeTies:    game.HomeTies,
-          awayWins:    game.AwayWins,
-          awayLosses:  game.AwayLosses,
-          awayTies:    game.AwayTies,
-        },
-      }));
-      setEvents(calendarEvents);
-      const uniqueLeagues   = ["All Leagues",   ...new Set(data.map(g => g.LeagueName))];
-      const uniqueDivisions = ["All Divisions", ...new Set(data.map(g => g.DivisionName))];
-      setLeagues(uniqueLeagues);
-      setDivisions(uniqueDivisions);
-      setLoading(false);
-    })
-    .catch(() => { setError("Failed to load schedule"); setLoading(false); });
+    fetchGames()
+      .then(data => {
+        const calendarEvents = data.map(game => ({
+          id:              String(game.GameID),
+          title:           `${game.HomeTeamName} vs ${game.AwayTeamName}`,
+          start:           game.GameDate.split("T")[0],
+          backgroundColor: getDivColor(game.DivisionName),
+          borderColor:     "transparent",
+          textColor:       "#fff",
+          extendedProps: {
+            league:      game.LeagueName,
+            division:    game.DivisionName,
+            home:        game.HomeTeamName,
+            away:        game.AwayTeamName,
+            time:        game.GameTime,
+            rink:        game.RinkLocation,
+            homeWins:    game.HomeWins    ?? 0,
+            homeLosses:  game.HomeLosses  ?? 0,
+            homeTies:    game.HomeTies    ?? 0,
+            awayWins:    game.AwayWins    ?? 0,
+            awayLosses:  game.AwayLosses  ?? 0,
+            awayTies:    game.AwayTies    ?? 0,
+          },
+        }));
+
+        setEvents(calendarEvents);
+
+        // Build filter lists dynamically from data
+        const uniqueLeagues   = ["All Leagues",   ...new Set(data.map(g => g.LeagueName))];
+        const uniqueDivisions = ["All Divisions", ...new Set(data.map(g => g.DivisionName))];
+        setLeagues(uniqueLeagues);
+        setDivisions(uniqueDivisions);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Failed to load schedule");
+        setLoading(false);
+      });
   }, []);
 
   // Filter displayed events based on active league and division selections
@@ -305,7 +312,7 @@ useEffect(() => {
       {/* Calendar container — w-full + max-w-4xl + mx-auto centers it on the page */}
       <div
         className="rounded-xl p-3 w-full max-w-4xl mx-auto"
-        style={{ background: "#0d1b2a", boxShadow: "0 8px 40px rgba(0,0,0,0.5)" }}
+        style={{ background: "#0d1b2a", boxShadow: "0 8px 40px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)" }}
       >
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}

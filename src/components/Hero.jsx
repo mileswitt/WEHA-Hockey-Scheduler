@@ -23,10 +23,10 @@ export default function Hero() {
         </h1>
 
         <p className="text-lg text-gray-300 mb-8">
-          Wolverines Hockey Association
+          Hockey Association
         </p>
 
-        <div className="bg-[#a11c0b] rounded-full px-8 py-3 inline-flex gap-8 justify-center shadow-xl">
+        <div className="bg-[#a11c0b] inline-flex rounded px-16 py-4 gap-4 text-lg font-semibold">
 
           {/* Team Schedule dropdown */}
           <div
@@ -35,7 +35,7 @@ export default function Hero() {
             onMouseLeave={() => setTeamOpen(false)}
           >
             <button className="hover:text-red-300 transition text-white">
-              Team Schedule
+              Team information
             </button>
             {teamOpen && (
               <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-44 z-50">
@@ -56,7 +56,7 @@ export default function Hero() {
               Game Schedule
             </Link>
             {gameOpen && (
-              <div className="absolute top-10 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-48 z-50">
+              <div className="absolute top-7 left-0 bg-white text-black rounded-xl shadow-xl p-4 w-48 z-50">
                 <ul className="space-y-2 text-sm">
                   <li className="py-1">
                     <Link to="/schedule" className="hover:text-red-600 block">

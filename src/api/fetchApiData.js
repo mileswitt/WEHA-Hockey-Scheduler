@@ -1,7 +1,7 @@
 // helper funtions to fetch data from api
 //will be used in various components to fetch data from the backend api
 
-const API = "https://weha-backend.onrender.com";
+const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 //fetch all teams with wins and losses 
 const fetchTeams = async () => {
@@ -47,6 +47,21 @@ const fetchLeagues = async () => {
         throw error;
     }
 };
+
+export const fetchGames = async () => {
+  try
+    {
+        const response = await fetch(`${API}/api/game`);
+        const data = await response.json();
+        return data;
+    }
+    catch (error)
+    {
+        console.error("Error fetching games:", error);
+        throw error;
+    }
+};
+
 
 // generate schedule for a division
 // will return the generated schedule for the division with the provided game date, time, and rink
@@ -128,10 +143,10 @@ export async function fetchAllSchedules() {
  
           // Team stats for modal display
           HomeWins:    homeTeam.Wins  ?? 0,
-          HomeLosses:  homeTeam.Loses ?? 0,
+          HomeLosses:  homeTeam.Losses ?? 0,
           HomeTies:    homeTeam.Ties  ?? 0,
           AwayWins:    awayTeam.Wins  ?? 0,
-          AwayLosses:  awayTeam.Loses ?? 0,
+          AwayLosses:  awayTeam.Losses ?? 0,
           AwayTies:    awayTeam.Ties  ?? 0,
         });
       });

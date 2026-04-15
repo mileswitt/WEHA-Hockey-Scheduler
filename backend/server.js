@@ -136,6 +136,18 @@ function schedule_division(teams)
   }
   seeded.sort((a, b) => b.winPercentage - a.winPercentage);
 
+  // Shuffle teams with equal win percentage for variety
+  for (let i = seeded.length - 1; i > 0; i--) 
+  {
+    if (seeded[i].winPercentage === seeded[i-1].winPercentage) 
+    {
+      if (Math.random() > 0.5) 
+      {
+        [seeded[i], seeded[i-1]] = [seeded[i-1], seeded[i]];
+      }
+    }
+  }
+
   // need to add bye week if there is an odd number of teams
   if (seeded.length % 2 !== 0)
   {
@@ -248,16 +260,25 @@ app.get("/api/game", async (req, res) => {
     const [rows] = await db.query(`
      SELECT
         g.GameID,
-        home.Name   AS HomeTeamName,
-        away.Name   AS AwayTeamName,
         g.GameDate,
         g.GameTime,
+        g.RinkLocation,
         g.CurrentGameStatus,
-        g.HomeTeamScore,
-        g.AwayTeamScore
-      FROM Game g
-      JOIN ScheduledTeam home ON g.HomeTeamID = home.ScheduledTeamID
-      JOIN ScheduledTeam away ON g.AwayTeamID = away.ScheduledTeamID
+        home.Name      AS HomeTeamName,
+        home.Wins      AS HomeWins,
+        home.Losses    AS HomeLosses,
+        home.Ties      AS HomeTies,
+        away.Name      AS AwayTeamName,
+        away.Wins      AS AwayWins,
+        away.Losses    AS AwayLosses,
+        away.Ties      AS AwayTies,
+        d.Name         AS DivisionName,
+        l.Name         AS LeagueName
+      FROM game g
+      JOIN team home     ON g.HomeTeamID = home.TeamID
+      JOIN team away     ON g.AwayTeamID = away.TeamID
+      JOIN division d    ON home.DivisionID = d.DivisionID
+      JOIN league l      ON d.LeagueID = l.LeagueID
       WHERE g.GameDate >= CURDATE()
       ORDER BY g.GameDate ASC, g.GameTime ASC
     `);
@@ -272,179 +293,54 @@ app.get("/api/game", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch schedule" });
   }
 });
- 
-// ============================================================
-// GENERATE SCHEDULE ROUTE
-// Pulls teams from external API filtered by divisionID
-// Runs seeded round robin algorithm
-// Inserts generated games into local Game table
-// ============================================================
-// app.post("/generate/:divisionID", async (req, res) => {
-//   try {
-//     const divisionID = parseInt(req.params.divisionID);
-    
-//     // Get editable fields from request body
-//     // These are set by the admin/user on the frontend
 
-//     const {
-//       seasonID  = null,
-//       gameDate  = new Date().toISOString().split("T")[0], // defaults to today
-//       gameTime  = "18:00:00",   // default 6pm
-//       rink      = "TBD",        // default rink
-//       adminID   = 1             // default admin
-//     } = req.body;
- 
-//     // Pull all teams from external API then filter by divisionID
-//     const allTeams = await getTeams();
-//     const teams = allTeams.filter(t => t.DivisionID === divisionID);
- 
-//     if (!teams || teams.length === 0) {
-//       return res.status(404).json({ error: "No teams found for this division" });
-//     }
- 
-//     if (teams.length < 2) {
-//       return res.status(400).json({ error: "Not enough teams to schedule" });
-//     }
-
-//      // Pull seasons from external API to get the LeagueID
-//     const allSeasons = await getSeasons();
-//     const season = allSeasons.find(s => s.SeasonID === seasonID);
-//     const leagueID = season ? season.LeagueID : teams[0].LeagueID;
-
-//     // Step 1 Insert League into local DB if not exists
-//     await db.query(`
-//       INSERT IGNORE INTO League (LeagueID, \`Name\`)
-//       VALUES (?, ?)
-//     `, [leagueID, season ? season.Name : "Unknown League"]);
-
-//     // Step 2 Insert Division into local DB if not exists
-//     await db.query(`
-//       INSERT IGNORE INTO Division (DivisionID, LeagueID, \`Name\`)
-//       VALUES (?, ?, ?)
-//     `, [divisionID, leagueID, "Unknown Division"]);
-
-//     // Step 3 Make sure Season exists in local DB
-//     if (seasonID) {
-//       await db.query(`
-//         INSERT IGNORE INTO Season (SeasonID, LeagueID, \`Name\`)
-//         VALUES (?, ?, ?)
-//       `, [seasonID, leagueID, season ? season.Name : "Unknown Season"]);
-//     }
-
-//     // Step 4 Run seeded round robin algorithm
-//     const schedule = schedule_division(teams);
-
-//     // Step 5 Insert each team into ScheduledTeam and Game
-//     const insertedGames = [];
-
-//     for (const game of schedule) {
-//       if (game.home === "BYE" || game.away === "BYE") continue;
-
-//       const homeTeam = teams.find(t => t.Name === game.home);
-//       const awayTeam = teams.find(t => t.Name === game.away);
-
-//       if (!homeTeam || !awayTeam) continue;
-
-//       const scheduledDate = `DATE_ADD('${gameDate}', INTERVAL ${game.week - 1} WEEK)`;
-
-//       // // Insert home team into ScheduledTeam if not exists
-//       // await db.query(`
-//       //   INSERT IGNORE INTO ScheduledTeam 
-//       //     (ScheduledTeamID, \`Name\`, LeagueID, DivisionID, SeasonID, EnteredByID, EnteredDate, EnteredTime)
-//       //   VALUES (?, ?, ?, ?, ?, ?, CURDATE(), CURTIME())
-//       // `, [homeTeam.TeamID, homeTeam.Name, leagueID, divisionID, seasonID || 1, adminID]);
-
-//       // // Insert away team into ScheduledTeam if not exists
-//       // await db.query(`
-//       //   INSERT IGNORE INTO ScheduledTeam 
-//       //     (ScheduledTeamID, \`Name\`, LeagueID, DivisionID, SeasonID, EnteredByID, EnteredDate, EnteredTime)
-//       //   VALUES (?, ?, ?, ?, ?, ?, CURDATE(), CURTIME())
-//       // `, [awayTeam.TeamID, awayTeam.Name, leagueID, divisionID, seasonID || 1, adminID]);
-
-//       // Generate a unique GameID based on team IDs and week
-//       const gameID = parseInt(`${homeTeam.TeamID}${awayTeam.TeamID}${game.week}`
-//         .slice(0, 9));
-
-//       // Insert into Game table
-//       await db.query(`
-//         INSERT IGNORE INTO Game 
-//           (GameID, HomeTeamID, AwayTeamID, SeasonID, HomeTeamScore, AwayTeamScore, GameDate, GameTime, CurrentGameStatus)
-//         VALUES (?, ?, ?, ?, 0, 0, DATE_ADD(?, INTERVAL ? WEEK), ?, 'Scheduled')
-//       `, [gameID, homeTeam.TeamID, awayTeam.TeamID, seasonID || 1, gameDate, game.week - 1, gameTime]);
-
-//       insertedGames.push({
-//         gameID,
-//         ...game,
-//         gameDate,
-//         gameTime,
-//         rink
-//       });
-//     }
-
-//     res.json({
-//       divisionID,
-//       teamCount:  teams.length,
-//       totalGames: insertedGames.length,
-//       schedule:   insertedGames
-//     });
-
-//   } catch (err) {
-//     console.error("Error generating schedule:", err);
-//     res.status(500).json({ error: err.message });
-//   }
-// });
-
-// GENERATE SCHEDULE ROUTE
-// Pulls teams from external API filtered by divisionID
-// Runs seeded round robin algorithm
-// Returns schedule without inserting into DB yet
-
-// GET /api/all-schedules
-// Runs schedule algorithm for every division and returns all games
-// Used by WeeklyCalendar, UpcomingEvents, and LeagueCalendar
-app.get("/api/all-schedules", async (req, res) => {
+app.post("/generate-all", async (req, res) => {
   try
   {
-    const allTeams     = await getTeams();
+    const {
+      gameDate = new Date().toISOString().split("T")[0],
+      gameTime = "18:00:00",
+      rink     = "TBD",
+    } = req.body;
+
     const allDivisions = await getDivisions();
-    const allLeagues   = await getLeagues();
+    const allTeams     = await getTeams();
+    const results      = [];
 
-    const allGames = [];
-
-    // Run algorithm for every division that has 2+ teams
     for (const division of allDivisions)
     {
       const teams = allTeams.filter(t => t.DivisionID === division.DivisionID);
       if (teams.length < 2) continue;
 
-      const league   = allLeagues.find(l => l.LeagueID === division.LeagueID);
-      const schedule = schedule_division(teams);
-
-      // Add division and league info to each game
-      for (const game of schedule)
+      try
       {
-        allGames.push({
-          ...game,
-          DivisionName: division.Name,
-          LeagueName:   league ? league.Name : "Unknown",
-          GameDate:     new Date(
-            Date.now() + (game.week - 1) * 7 * 24 * 60 * 60 * 1000
-          ).toISOString().split("T")[0],
-          GameTime: "18:00:00",
-          Rink:     "TBD",
-          // Use combined ID as unique game identifier
-          GameID: `${division.DivisionID}-${game.homeTeamID}-${game.awayTeamID}-${game.week}`,
-          HomeTeamName: game.home,
-          AwayTeamName: game.away,
+        const response = await fetch(
+          `http://localhost:${process.env.PORT || 5000}/generate/${division.DivisionID}`,
+          {
+            method:  "POST",
+            headers: { "Content-Type": "application/json" },
+            body:    JSON.stringify({ gameDate, gameTime, rink }),
+          }
+        );
+        const data = await response.json();
+        results.push({
+          divisionID:   division.DivisionID,
+          divisionName: division.Name,
+          totalGames:   data.totalGames || 0,
         });
+        console.log(`✅ Division ${division.DivisionID} — ${data.totalGames} games`);
+      }
+      catch (err)
+      {
+        console.warn(`⚠ Skipping division ${division.DivisionID}:`, err.message);
+        results.push({ divisionID: division.DivisionID, error: err.message });
       }
     }
 
-    res.json(allGames);
+    res.json({ message: "All divisions generated", results });
   }
   catch (err)
   {
-    console.error("Error fetching all schedules:", err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -454,55 +350,167 @@ app.post("/generate/:divisionID", async (req, res) => {
   {
     const divisionID = parseInt(req.params.divisionID);
 
-    // Get optional editable fields from request body
     const {
+      seasonID = null,
       gameDate = new Date().toISOString().split("T")[0],
       gameTime = "18:00:00",
       rink     = "TBD",
     } = req.body;
 
-    // Pull all teams from external API then filter by divisionID
+    // Pull teams from external API filtered by divisionID
     const allTeams = await getTeams();
     const teams    = allTeams.filter(t => t.DivisionID === divisionID);
 
     if (!teams || teams.length === 0)
-    {
       return res.status(404).json({ error: "No teams found for this division" });
-    }
 
     if (teams.length < 2)
-    {
       return res.status(400).json({ error: "Not enough teams to schedule" });
-    }
 
-    // Pull division info for league name
+    // Pull division and league info from external API
     const allDivisions = await getDivisions();
     const division     = allDivisions.find(d => d.DivisionID === divisionID);
 
-    // Pull leagues for league name
     const allLeagues = await getLeagues();
     const league     = allLeagues.find(l => l.LeagueID === (division ? division.LeagueID : null));
+
+    // // Pull seasons from external API
+    // const allSeasons = await getSeasons();
+    // const season     = seasonID ? allSeasons.find(s => s.SeasonID === seasonID) : null;
+    const leagueID   = league ? league.LeagueID : null;
+
+    // Pull seasons and find one that matches the league
+    const allSeasons = await getSeasons();
+    const matchingSeason = allSeasons.find(s => s.LeagueID === leagueID);
+    const useSeasonID = seasonID || (matchingSeason ? matchingSeason.SeasonID : null);
+
+    let validSeasonID = null;
+    try
+    {
+      // First try the exact season we found
+      const [seasonRows] = await db.query(
+        'SELECT SeasonID FROM season WHERE SeasonID = ? LIMIT 1',
+        [useSeasonID]
+      );
+
+      if (seasonRows.length > 0)
+      {
+        // Found it — use it
+        validSeasonID = seasonRows[0].SeasonID;
+      }
+      else
+      {
+        // Not found — try any season for this league in local DB
+        const [anySeasonRows] = await db.query(
+          'SELECT SeasonID FROM season WHERE LeagueID = ? LIMIT 1',
+          [leagueID]
+        );
+
+        if (anySeasonRows.length > 0)
+        {
+          validSeasonID = anySeasonRows[0].SeasonID;
+        }
+        else
+        {
+          // Last resort — use any season at all
+          const [firstSeason] = await db.query(
+            'SELECT SeasonID FROM season LIMIT 1'
+          );
+          if (firstSeason.length > 0) validSeasonID = firstSeason[0].SeasonID;
+        }
+      }
+    }
+    catch (e)
+    {
+      console.warn("Season lookup failed:", e.message);
+    }
+
+    if (!validSeasonID)
+      return res.status(400).json({ error: "No valid season found in database" });
 
     // Run seeded round robin algorithm
     const schedule = schedule_division(teams);
 
-    // Add gameDate, gameTime, rink to each game for display
-    const scheduleWithDetails = schedule.map(game => ({
-      ...game,
-      gameDate: new Date(
+    const insertedGames = [];
+
+    for (const game of schedule)
+    {
+      if (game.home === "BYE" || game.away === "BYE") continue;
+
+      const homeTeam = teams.find(t => t.Name === game.home);
+      const awayTeam = teams.find(t => t.Name === game.away);
+
+      if (!homeTeam || !awayTeam) continue;
+
+      // spreads games across Fri/Sat/Sun within each week
+     const weekStart = new Date(
         new Date(gameDate).getTime() + (game.week - 1) * 7 * 24 * 60 * 60 * 1000
-      ).toISOString().split("T")[0],
-      gameTime,
-      rink,
-    }));
+      );
+
+      // Assign slot to Fri(5), Sat(6), or Sun(0) based on slot number
+      const weekendDays = [5, 6, 0]; // Friday, Saturday, Sunday
+      const targetDay   = weekendDays[game.slot % 3];
+      const currentDay  = weekStart.getDay();
+
+      // Calculate days to add to reach target weekend day
+      let daysToAdd = targetDay - currentDay;
+      if (daysToAdd < 0) daysToAdd += 7;
+
+      const gameDay = new Date(weekStart.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
+      const gameDateForWeek = gameDay.toISOString().split("T")[0];
+
+      // Generate unique GameID from team IDs and week
+      const gameID = parseInt(
+        `${homeTeam.TeamID}${awayTeam.TeamID}${game.week}`.slice(0, 9)
+      );
+      // insert home team into scheduledteam table
+      await db.query(`
+        INSERT IGNORE INTO scheduledteam
+          (ScheduledTeamID, Name, LeagueID, DivisionID, SeasonID, EnteredByID, EnteredDate, EnteredTime)
+        VALUES (?, ?, ?, ?, ?, 1, CURDATE(), CURTIME())
+      `, [awayTeam.TeamID, awayTeam.Name, leagueID, divisionID, validSeasonID]);
+      
+      // insert away team into scheduledteam table
+      await db.query(`
+        INSERT IGNORE INTO scheduledteam
+          (ScheduledTeamID, Name, LeagueID, DivisionID, SeasonID, EnteredByID, EnteredDate, EnteredTime)
+        VALUES (?, ?, ?, ?, ?, 1, CURDATE(), CURTIME())
+      `, [homeTeam.TeamID, homeTeam.Name, leagueID, divisionID, validSeasonID]);
+
+      // Insert into game table
+      // Uses TeamID directly since game references team table
+      await db.query(`
+        INSERT IGNORE INTO game
+          (GameID, HomeTeamID, AwayTeamID, SeasonID, GameDate, GameTime, RinkLocation, CurrentGameStatus)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'Scheduled')
+      `, [
+        gameID,
+        homeTeam.TeamID,
+        awayTeam.TeamID,
+        validSeasonID,  // ← changed from seasonID || 1
+        gameDateForWeek,
+        gameTime,
+        rink
+      ]);
+
+      insertedGames.push({
+        gameID,
+        ...game,
+        gameDate:     gameDateForWeek,
+        gameTime,
+        rink,
+        divisionName: division ? division.Name : "Unknown",
+        leagueName:   league   ? league.Name   : "Unknown",
+      });
+    }
 
     res.json({
       divisionID,
-      divisionName: division ? division.Name     : "Unknown",
-      leagueName:   league   ? league.Name       : "Unknown",
+      divisionName: division ? division.Name : "Unknown",
+      leagueName:   league   ? league.Name   : "Unknown",
       teamCount:    teams.length,
-      totalGames:   scheduleWithDetails.length,
-      schedule:     scheduleWithDetails
+      totalGames:   insertedGames.length,
+      schedule:     insertedGames
     });
   }
   catch (err)
