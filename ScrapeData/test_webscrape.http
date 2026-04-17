@@ -1,3 +1,5 @@
+#### This file contatins test requests for the baceknd enpoints for webscraping as well as authentication
+
 POST http://127.0.0.1:5000/api/runWebScrape 
 
 ###
@@ -8,8 +10,45 @@ GET http://127.0.0.1:5000/api/webScrapeStatus
 
 GET http://127.0.0.1:5000/api/getPlayers
 
-###
+### Test API to get teams from api
 
 GET http://127.0.0.1:5000/api/getTeams
 
+### Test Cases For Login Functionality
 
+
+#### This request should fail becasuse the password is incorrect
+POST http://127.0.0.1:5000/api/login?username=admin2@weha.com&password=guessPassword
+Content-Type: application/json
+
+{
+  "username": "admin2@weha.com",
+  "password": "guessPassword"
+}
+
+### This request should fail because the username is incorrect
+POST http://127.0.0.1:5000/api/login
+Content-Type: application/json
+
+{
+  "username": "admin@weha.com",
+  "password": "AdminTestingWEHA2026123@"
+}
+
+### This request should succeed because the username and password are correct
+POST http://127.0.0.1:5000/api/login
+Content-Type: application/json
+
+{
+  "username": "admin2@weha.com",
+  "password": "AdminTestingWEHA2026123@"
+}
+
+### This request should fail because no username and password were provided
+POST http://127.0.0.1:5000/api/login
+Content-Type: application/json
+
+{
+    "username": "",
+    "password": ""
+}
