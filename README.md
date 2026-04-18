@@ -34,6 +34,10 @@ python3 -m venv venv
 ```CMD Terminal
 venv\Scripts\pip install -r ScrapeData\requirements.txt
 ```
+Sometimes the venv folder uses path /bin instead of Scripts
+```CMD Terminal Using bin path
+venv\bin\pip install -r ScrapeData\requirements.txt
+```
 
 ---
 
@@ -75,7 +79,8 @@ DB_USER=your_database_user
 DB_PASSWORD=your_database_password
 DB_NAME=your_database_name
 DB_PORT=3306
-PYTHON_VENV_PATH=../../venv/Scripts/python.exe <- path to venv file
+PYTHON_VENV_PATH=../../venv/Scripts/python.exe <- path to venv file(Windows)
+# PYTHON_VENV_PATH=../../venv/bin/python3 ####  <- path to venv file(Linux)
 WEBSCRAPER_PATH=../../ScrapeData/main.py <- path to script to run for webscraping action
 ```
 
