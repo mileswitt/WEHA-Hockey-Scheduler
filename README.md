@@ -24,7 +24,7 @@ From the **`WEHA-Hockey-Scheduler/`** root directory (not inside `ScrapeData`):
 
 ```CMD Terminal
 cd WEHA-Hockey-Scheduler
-python -m venv venv
+python3 -m venv venv
 ```
 
 ---
