@@ -28,9 +28,6 @@ const Footer = () => {
                 League Schedule
               </Link>
             </li>
-            <li className="hover:text-white cursor-pointer transition">
-              Teams
-            </li>
           </ul>
         </div>
 

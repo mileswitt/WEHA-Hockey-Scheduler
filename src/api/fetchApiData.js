@@ -7,7 +7,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const fetchTeams = async () => {
   try 
   {
-    const response = await fetch(`${API}/api/teams`);
+    const response = await fetch(`${API}/api/localteams`);
     const data = await response.json();
     return data;
   } 
@@ -32,6 +32,8 @@ const fetchDivisions = async () => {
       throw error;
     }
 };
+
+
 
 // fetch all leagues
 const fetchLeagues = async () => {

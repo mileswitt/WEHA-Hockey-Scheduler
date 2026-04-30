@@ -9,7 +9,7 @@ export default function Navbar() {
   ]
 
   return (
-    <nav style={{ backgroundColor: '#c21537' }} className="text-white px-10 py-4 flex justify-between items-center shadow-md w-full">
+    <nav style={{ backgroundColor: '#c21537' }} className="text-white px-20 py-10 flex justify-between items-center shadow-md w-full">
 
       <Link to="/" className="font-semibold hover:opacity-80 transition whitespace-nowrap">
         West Elk Hockey Association
@@ -26,9 +26,9 @@ export default function Navbar() {
               style={{
                 backgroundColor: isActive ? '#ffffff' : 'rgba(255,255,255,0.25)',
                 color: isActive ? '#c21537' : '#ffffff',
-                padding: '6px 18px',
+                padding: '10px 24px',
                 borderRadius: '9999px',
-                fontSize: '14px',
+                fontSize: '16px',
                 fontWeight: '600',
                 textDecoration: 'none',
                 whiteSpace: 'nowrap',

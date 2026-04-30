@@ -263,50 +263,90 @@ useEffect(() => {
       </p>
 
       {/* League filter buttons — built dynamically from DB data */}
-      <div className="flex justify-center flex-wrap gap-2 w-full max-w-4xl mx-auto mb-3">
-        {leagues.map(l => (
-          <button
-            key={l}
-            onClick={() => setActiveLeague(l)}
-            className={`px-4 py-1.5 rounded text-xs text-white tracking-widest border-2 transition-all cursor-pointer
-              ${activeLeague === l
-                ? "border-white bg-white/20"
-                : "border-white/20 bg-white/8 hover:bg-white/15"
-              }`}
+      {/* Filters row — league and division dropdowns */}
+      <div className="flex justify-center gap-4 w-full max-w-4xl mx-auto mb-5 flex-wrap">
+        
+        {/* League dropdown */}
+        <div style={{ position: 'relative' }}>
+          <select
+            value={activeLeague}
+            onChange={e => {
+              setActiveLeague(e.target.value);
+              setActiveDivision("All Divisions");
+            }}
+            style={{
+              background:    'rgba(255,255,255,0.15)',
+              border:        '2px solid rgba(255,255,255,0.3)',
+              borderRadius:  '8px',
+              color:         '#fff',
+              padding:       '10px 36px 10px 14px',
+              fontSize:      '13px',
+              letterSpacing: '0.06em',
+              cursor:        'pointer',
+              appearance:    'none',
+              minWidth:      '220px',
+              fontFamily:    "'Bebas Neue', Impact, sans-serif",
+            }}
           >
-            {l}
-          </button>
-        ))}
-      </div>
+            {leagues.map(l => (
+              <option key={l} value={l} style={{ background: '#0d1b2a', color: '#fff' }}>
+                {l}
+              </option>
+            ))}
+          </select>
+          <span style={{
+            position:      'absolute',
+            right:         '12px',
+            top:           '50%',
+            transform:     'translateY(-50%)',
+            pointerEvents: 'none',
+            color:         '#fff',
+            fontSize:      '10px',
+          }}>▼</span>
+        </div>
 
-      {/* Division filter buttons — color coded by division */}
-      <div className="flex justify-center flex-wrap gap-2 w-full max-w-4xl mx-auto mb-5">
-        {divisions.map(d => {
-          const active = activeDivision === d;
-          const color  = DIVISION_COLORS[d];
-          return (
-            <button
-              key={d}
-              onClick={() => setActiveDivision(d)}
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded text-xs text-white tracking-widest border-2 transition-all cursor-pointer"
-              style={{
-                // Active button fills with division color as background
-                background:  active && color ? color : "rgba(255,255,255,0.08)",
-                // Border uses division color whether active or inactive
-                borderColor: active ? (color || "#fff") : (color || "rgba(255,255,255,0.2)"),
-              }}
-            >
-              {/* Show colored dot only on inactive division buttons */}
-              {d !== "All Divisions" && !active && (
-                <span
-                  className="w-2 h-2 rounded-full shrink-0 inline-block"
-                  style={{ background: color || "#888" }}
-                />
-              )}
-              {d}
-            </button>
-          );
-        })}
+        {/* Division dropdown */}
+        <div style={{ position: 'relative' }}>
+          <select
+            value={activeDivision}
+            onChange={e => setActiveDivision(e.target.value)}
+            style={{
+              background:    activeDivision !== "All Divisions" && DIVISION_COLORS[activeDivision]
+                ? DIVISION_COLORS[activeDivision]
+                : 'rgba(255,255,255,0.15)',
+              border:        `2px solid ${
+                activeDivision !== "All Divisions" && DIVISION_COLORS[activeDivision]
+                  ? DIVISION_COLORS[activeDivision]
+                  : 'rgba(255,255,255,0.3)'
+              }`,
+              borderRadius:  '8px',
+              color:         '#fff',
+              padding:       '10px 36px 10px 14px',
+              fontSize:      '13px',
+              letterSpacing: '0.06em',
+              cursor:        'pointer',
+              appearance:    'none',
+              minWidth:      '220px',
+              fontFamily:    "'Bebas Neue', Impact, sans-serif",
+            }}
+          >
+            {divisions.map(d => (
+              <option key={d} value={d} style={{ background: '#0d1b2a', color: '#fff' }}>
+                {d}
+              </option>
+            ))}
+          </select>
+          <span style={{
+            position:      'absolute',
+            right:         '12px',
+            top:           '50%',
+            transform:     'translateY(-50%)',
+            pointerEvents: 'none',
+            color:         '#fff',
+            fontSize:      '10px',
+          }}>▼</span>
+        </div>
+
       </div>
 
       {/* Calendar container — w-full + max-w-4xl + mx-auto centers it on the page */}
@@ -323,6 +363,7 @@ useEffect(() => {
           headerToolbar={{ left: "prev", center: "title", right: "next" }}
           height="auto"
           dayMaxEvents={3} // show max 3 events per day, rest hidden under "+more"
+          dayHeaderFormat={{ weekday: 'long' }}
         />
       </div>
 
@@ -353,8 +394,18 @@ const CALENDAR_CSS = `
   .fc-toolbar-title { color: #fff !important; font-size: 20px !important; letter-spacing: 0.1em; }
   .fc-button { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; border-radius: 6px !important; }
   .fc-button:hover { background: rgba(255,255,255,0.22) !important; }
-  .fc-col-header-cell-cushion { color: #fff !important; font-size: 14px; letter-spacing: 0.1em; }
-  .fc-col-header-cell { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.08) !important; padding: 7px 0 !important; }
+  .fc-col-header { background: #0d1b2a !important; }
+  .fc-col-header-cell { background: #162032 !important; border-color: rgba(255,255,255,0.08) !important; padding: 10px 0 !important; }
+  .fc-col-header-cell-cushion { 
+    color: #fff !important; 
+    font-size: 13px !important; 
+    letter-spacing: 0.05em !important;
+    font-family: system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    display: block !important;
+    padding: 8px 0 !important;
+  }
+  .fc-col-header-cell { background: rgba(255,255,255,0.07) !important; border-color: rgba(255,255,255,0.08) !important; padding: 10px 0 !important; }
   .fc-daygrid-day { background: #0d1b2a !important; border-color: rgba(255,255,255,0.08) !important; border-style: dashed !important; }
   .fc-daygrid-day:hover { background: #122336 !important; }
   .fc-day-other .fc-daygrid-day-number { color: rgba(255,255,255,0.2) !important; }

@@ -254,6 +254,70 @@ app.get("/api/leagues", async (req, res) => {
   }
 });
 
+
+
+// Get teams from local database instead of external API
+app.get("/api/localteams", async (req, res) => {
+  try {
+    const [rows] = await db.query(`
+      SELECT t.TeamID, t.Name, t.DivisionID, t.LeagueID,
+             t.Wins, t.Losses, t.Ties, t.GamesPlayed,
+             d.Name AS DivisionName, l.Name AS LeagueName
+      FROM team t
+      JOIN division d ON t.DivisionID = d.DivisionID
+      JOIN league l   ON t.LeagueID   = l.LeagueID
+      ORDER BY l.Name, d.Name, t.Name
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching local teams:", err);
+    res.status(500).json({ error: "Failed to fetch teams" });
+  }
+});
+
+// Get divisions from local DB
+app.get("/api/localdivisions", async (req, res) => {
+  try 
+  {
+    const [rows] = await db.query(`SELECT * FROM division ORDER BY Name`);
+    res.json(rows);
+  } 
+  catch (err) 
+  {
+    res.status(500).json({ error: "Failed to fetch divisions" });
+  }
+});
+
+app.get("/api/players/:teamID", async (req, res) => {
+  try {
+    const teamID = parseInt(req.params.teamID);
+    const [rows] = await db.query(`
+      SELECT DISTINCT p.PlayerID, p.FirstName, p.LastName, 
+             p.Position, p.JerseyNumber, p.Goals, p.Assists, p.GamesPlayed
+      FROM player p
+      JOIN playerteam pt ON p.PlayerID = pt.PlayerID
+      WHERE pt.TeamID = ?
+      ORDER BY p.LastName, p.FirstName
+    `, [teamID]);
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching players:", err);
+    res.status(500).json({ error: "Failed to fetch players" });
+  }
+});
+
+// Get leagues from local DB
+app.get("/api/localleagues", async (req, res) => {
+  try 
+  {
+    const [rows] = await db.query(`SELECT * FROM league ORDER BY Name`);
+    res.json(rows);
+  } catch (err) 
+  {
+    res.status(500).json({ error: "Failed to fetch leagues" });
+  }
+});
+
 // Get upcoming games from local DB Game table
 app.get("/api/game", async (req, res) => {
   try {

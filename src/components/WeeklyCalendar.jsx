@@ -142,19 +142,43 @@ const WeeklyCalendar = () => {
       boxSizing: "border-box",
     }}>
       <style>{`
-        .fc-wrapper .fc { width: 100% !important; }
-        .fc-wrapper .fc-view-harness { width: 100% !important; }
-        .fc-wrapper table { width: 100% !important; }
-        .weekly-cal-title {
-          font-size: 1.5rem;
-          font-weight: bold;
-          text-align: center;
-          color: white;
-          margin-bottom: 24px;
-        }
-        .fc-event-title { font-size: 11px; }
-        .fc-timegrid-slot { height: 40px !important; }
-      `}</style>
+      .fc-wrapper .fc { width: 100% !important; }
+      .fc-wrapper .fc-view-harness { width: 100% !important; }
+      .fc-wrapper table { width: 100% !important; }
+      .weekly-cal-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+        margin-bottom: 24px;
+      }
+      .fc-event-title { font-size: 11px; }
+      .fc-timegrid-slot { height: 40px !important; }
+
+      /* Fix day headers */
+      .fc-col-header { background: #1a2535 !important; }
+      .fc-col-header-cell { background: #1a2535 !important; border-color: rgba(255,255,255,0.08) !important; }
+      .fc-col-header-cell-cushion {
+        color: #fff !important;
+        font-size: 13px !important;
+        font-family: system-ui, sans-serif !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        padding: 8px 0 !important;
+        display: block !important;
+      }
+
+      /* Fix time slots and general calendar colors */
+      .fc-timegrid-axis { background: #1f2937 !important; }
+      .fc-timegrid-slot-label { color: rgba(255,255,255,0.5) !important; font-size: 11px !important; }
+      .fc-scrollgrid, .fc-scrollgrid td, .fc-scrollgrid th { border-color: rgba(255,255,255,0.08) !important; }
+      .fc-toolbar-title { color: #fff !important; }
+      .fc-button { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; border-radius: 6px !important; }
+      .fc-button:hover { background: rgba(255,255,255,0.22) !important; }
+      .fc-timegrid-col { background: #1f2937 !important; }
+      .fc-day-today { background: #243044 !important; }
+      .fc-timegrid-col.fc-day-today { background: #243044 !important; }
+    `}</style>
 
       <h2 className="weekly-cal-title">Weekly Schedule</h2>
 
@@ -198,6 +222,7 @@ const WeeklyCalendar = () => {
               right:  ""
             }}
             events={events}
+            dayHeaderFormat={{weekday: 'long'}}
             // Add rink info as a tooltip on hover
             eventDidMount={info => {
               info.el.title = `${info.event.extendedProps.division} · ${info.event.extendedProps.rink}`;
