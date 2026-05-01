@@ -1,0 +1,490 @@
+TeamID,DivisionID,LeagueID,Name,Wins,Loses,Ties,GamesPlayed
+78877,15,5,"WCHL Aspen 14U A",12,0,1,18
+78878,15,5,"WCHL Glenwood 14U A",8,0,0,18
+78879,15,5,"WCHL Grand Junction 14U A",1,0,0,16
+78880,15,5,"WCHL Steamboat 14U A",14,0,2,18
+78881,15,5,"WCHL Summit 14U A",8,0,3,18
+78907,15,5,"WCHL Telluride 14U A",5,0,4,18
+78908,15,5,"WCHL Vail 14U A",14,0,0,16
+78909,15,5,"WCHL West Elk 14U A",9,0,3,21
+78910,16,5,"WCHL Aspen 14U B",16,0,1,24
+78911,16,5,"WCHL Grand Junction 14U B",0,0,0,19
+78912,16,5,"WCHL Summit 14U B",6,0,1,23
+78913,16,5,"WCHL Telluride 14U B",8,0,1,16
+78914,16,5,"WCHL Vail 14U B Blue",12,0,1,20
+78915,16,5,"WCHL Vail 14U B White",17,0,0,20
+78916,13,5,"WCHL Aspen/Glenwood 12U A",12,0,2,17
+78917,13,5,"WCHL Grand Junction 12U A",0,0,0,18
+78918,13,5,"WCHL Steamboat 12U A",8,0,2,17
+78919,13,5,"WCHL Summit 12U A",13,0,2,18
+78920,13,5,"WCHL Telluride 12U A",7,0,0,18
+78921,13,5,"WCHL Vail 12U A",12,0,1,17
+78922,13,5,"WCHL West Elk 12U A",2,0,0,18
+78923,14,5,"WCHL Aspen 12U B",12,0,1,18
+78924,14,5,"WCHL Glenwood 12U B",6,0,1,15
+78925,14,5,"WCHL Grand Junction 12U B",1,0,0,14
+78926,14,5,"WCHL Steamboat 12U B",7,0,3,16
+78927,14,5,"WCHL Summit 12U B",5,0,0,16
+78928,14,5,"WCHL Telluride 12U B",5,0,0,16
+78929,14,5,"WCHL Vail 12U B Blue",16,0,1,17
+78930,14,5,"WCHL Vail 12U B White",14,0,2,17
+78931,14,5,"WCHL West Elk 12U B",3,0,1,17
+78932,11,5,"WCHL Aspen 10U A",3,0,2,15
+78934,11,5,"WCHL Grand Junction 10U A",1,0,3,15
+78935,11,5,"WCHL Steamboat 10U A",7,0,1,15
+78936,11,5,"WCHL Summit 10U A",12,0,0,15
+78937,11,5,"WCHL Telluride 10U A",12,0,1,15
+78938,11,5,"WCHL Vail 10U A Blue",0,0,2,16
+78939,11,5,"WCHL Vail 10U A White",10,0,1,17
+78940,11,5,"WCHL West Elk 10U A",7,0,4,17
+78942,12,5,"WCHL Aspen 10U B",14,0,0,15
+78943,12,5,"WCHL Glenwood 10U B",5,0,3,15
+78944,12,5,"WCHL Grand Junction 10U B",2,0,1,15
+78945,12,5,"WCHL Steamboat 10U B",9,0,3,15
+78946,12,5,"WCHL Summit 10U B",4,0,3,15
+78947,12,5,"WCHL Telluride 10U B",2,0,0,15
+78948,12,5,"WCHL Vail 10U B Blue",9,0,1,16
+78949,12,5,"WCHL Vail 10U B White",8,0,3,16
+78950,12,5,"WCHL West Elk 10U B",8,0,5,17
+82467,1,1,"Inn at Tomichi",3,0,2,12
+82468,1,1,"Rocky Mountain Trees",8,0,0,14
+82469,1,1,"Pike Construction",3,0,2,12
+82470,1,1,GVH,6,0,0,13
+82471,1,1,Dietrich,8,0,0,13
+82472,1,1,"Three Rivers Resort",10,0,1,14
+82473,1,1,Marios,4,0,1,12
+82474,2,1,"All Sports",5,0,2,13
+82475,2,1,"Alpine Lumber",4,0,3,12
+82476,2,1,"CB Electric",12,0,2,14
+82477,2,1,EconoLodge,9,0,2,14
+82478,2,1,"Gunnison Pizza Company",7,0,0,13
+82479,2,1,"Gunnison Valley Bank",2,0,1,13
+82480,2,1,"Gunnison Valley Vet Clinic",4,0,3,12
+82481,2,1,NuVista,1,0,0,12
+82482,2,1,REG,9,0,0,13
+82483,2,1,"Sleightholm Workshop",4,0,1,12
+86594,17,6,"IND Durango 10U A",10,0,0,13
+86595,17,6,"IND Durango 10U B",5,0,1,13
+86596,17,6,"IND Durango 12U A",9,0,1,11
+86597,17,6,"IND Durango 14U A",0,0,1,13
+86598,17,6,"IND Durango 12U B",4,0,1,10
+106494,26,9,"Nu Vista",7,0,1,13
+106495,26,9,Marios,5,0,1,14
+106496,26,9,GVVC,4,0,0,13
+106497,26,9,EconoLodge,4,0,1,13
+106498,26,9,"Inn at Tomichi Village",12,0,0,15
+106499,26,9,"Pike Builders",9,0,1,14
+106500,26,9,"Gunnison Pizza Company",9,0,2,15
+106501,26,9,"Three Rivers Resort",2,0,0,13
+106502,25,9,"Dietrich Dirtworks",3,0,1,8
+106503,25,9,GVH,4,0,1,8
+106504,25,9,"Alpine Lumber",6,0,1,8
+106505,25,9,"Sleightholm Workshop",1,0,1,8
+106506,39,13,"Talk of the Town",3,0,0,12
+106507,39,13,Kochevers,12,0,0,14
+106508,39,13,"Lacy Construction",10,0,0,13
+106509,39,13,"Altitude Painting",0,0,0,12
+106510,39,13,SKA,7,0,1,13
+106511,39,13,"Bliss Chiropractic",9,0,1,14
+106512,39,13,REG,3,0,0,12
+106513,39,13,Sunflower,6,0,0,12
+118806,20,7,"WCHL Aspen/Glenwood 12U A",4,0,0,4
+118807,20,7,"WCHL Grand Junction 12U A",1,0,0,3
+118808,20,7,"WCHL Steamboat 12U A",2,0,0,4
+118809,20,7,"WCHL Summit 12U A",1,0,0,3
+118810,20,7,"WCHL Telluride 12U A",0,0,0,2
+118811,20,7,"WCHL Vail 12U A",4,0,0,6
+118812,20,7,"WCHL West Elk 12U A",0,0,0,2
+118813,21,7,"WCHL Aspen 12U B",3,0,0,5
+118814,21,7,"WCHL Glenwood 12U B",2,0,0,4
+118815,21,7,"WCHL Grand Junction 12U B",1,0,0,3
+118816,21,7,"WCHL Steamboat 12U B",1,0,0,3
+118817,21,7,"WCHL Summit 12U B",2,0,0,4
+118818,21,7,"WCHL Telluride 12U B",0,0,0,2
+118819,21,7,"WCHL Vail 12U B Blue",3,0,0,5
+118820,21,7,"WCHL Vail 12U B White",4,0,0,4
+118821,21,7,"WCHL West Elk 12U B",0,0,0,2
+118822,22,7,"WCHL Aspen 14U A",2,0,0,4
+118823,22,7,"WCHL Glenwood 14U A",2,0,0,4
+118824,22,7,"WCHL Grand Junction 14U A",0,0,0,2
+118825,22,7,"WCHL Steamboat 14U A",1,0,0,3
+118826,22,7,"WCHL Summit 14U A",4,0,0,6
+118827,22,7,"WCHL Telluride 14U A",1,0,0,3
+118828,22,7,"WCHL Vail 14U A",4,0,0,4
+118829,22,7,"WCHL West Elk 14U A",0,0,0,2
+120964,18,7,"WCHL Aspen 10U A",0,0,0,2
+120965,18,7,"WCHL Grand Junction 10U A",1,0,0,3
+120966,18,7,"WCHL Steamboat 10U A",1,0,0,3
+120967,18,7,"WCHL Summit 10U A",5,0,0,6
+120968,18,7,"WCHL Telluride 10U A",3,0,0,5
+120969,18,7,"WCHL Vail 10U A Blue",0,0,0,2
+120970,18,7,"WCHL Vail 10U A White",3,0,0,5
+120971,18,7,"WCHL West Elk 10U A",2,0,0,4
+120972,19,7,"WCHL Aspen 10U B",4,0,0,4
+120973,19,7,"WCHL Glenwood 10U B",0,0,0,2
+120974,19,7,"WCHL Grand Junction 10U B",1,0,0,3
+120975,19,7,"WCHL Steamboat 10U B",2,0,0,4
+120976,19,7,"WCHL Summit 10U B",2,0,0,4
+120977,19,7,"WCHL Telluride 10U B",0,0,0,2
+120978,19,7,"WCHL Vail 10U B Blue",4,0,0,6
+120979,19,7,"WCHL Vail 10U B White",2,0,0,4
+120980,19,7,"WCHL West Elk 10U B",1,0,0,3
+121281,23,7,"WCHL Aspen 14U B",3,0,0,5
+121282,23,7,"WCHL Grand Junction 14U B",0,0,0,2
+121283,23,7,"WCHL Summit 14U B",0,0,0,2
+121284,23,7,"WCHL Telluride 14U B",2,0,0,4
+121285,23,7,"WCHL Vail 14U B Blue",2,0,0,4
+121286,23,7,"WCHL Vail 14U B White",4,0,0,5
+161710,11,5,"WCHL Summit 10U A",12,0,2,21
+161711,13,5,"WCHL Summit 12U A",10,0,1,23
+161712,15,5,"WCHL Summit 14U A",18,0,1,25
+162536,15,5,"WCHL Grand Junction River Hawks 14U A",5,0,1,25
+162537,16,5,"WCHL Grand Junction River Hawks 14U B",0,0,0,19
+162564,3,2,"Inn at Tomichi",3,0,1,12
+162565,3,2,"Rocky Mountain Trees",7,0,1,13
+162566,3,2,"Pike Construction",9,0,0,12
+162567,3,2,GVH,8,0,0,14
+162568,3,2,Dietrich,7,0,2,14
+162569,3,2,"Three Rivers Resort",5,0,2,13
+162570,3,2,Marios,3,0,0,12
+162571,4,2,"All Sports",3,0,4,12
+162572,4,2,"Alpine Lumber",3,0,3,13
+162573,4,2,"CB Electric",4,0,1,14
+162574,4,2,EconoLodge,7,0,0,13
+162575,4,2,"Gunnison Pizza Company",3,0,0,12
+162576,4,2,"Gunnison Valley Bank",6,0,2,12
+162577,4,2,"Gunnison Valley Vet Clinic",7,0,0,12
+162578,4,2,NuVista,6,0,2,14
+162579,4,2,REG,7,0,1,12
+162580,4,2,"Sleightholm Workshop",11,0,1,14
+163909,15,5,"WCHL Steamboat 14U A",5,0,2,23
+163910,13,5,"WCHL Steamboat 12U A",18,0,3,26
+166391,13,5,"WCHL Grand Junction River Hawks 12U A",4,0,1,21
+166392,14,5,"WCHL Grand Junction River Hawks 12U B",1,0,3,22
+166913,16,5,"WCHL Vail Mountaineers 14U B White",5,0,2,22
+166914,11,5,"WCHL Vail Mountaineers 10U A Blue",7,0,1,20
+166915,11,5,"WCHL Vail Mountaineers 10U A White",8,0,1,21
+168518,12,5,"WCHL Vail Mountaineers 10U B Blue",14,0,3,21
+168540,12,5,"WCHL Grand Junction River Hawks 10U B",0,0,1,18
+168541,11,5,"WCHL Grand Junction River Hawks 10U A",3,0,3,18
+169888,14,5,"WCHL Steamboat 12U B",12,0,1,23
+169889,11,5,"WCHL Steamboat 10U A",19,0,0,20
+169890,12,5,"WCHL Steamboat 10U B",16,0,2,22
+169891,12,5,"WCHL Vail Mountaineers 10U B White",11,0,1,22
+169892,13,5,"WCHL Vail Mountaineers 12U A White",9,0,2,24
+169990,14,5,"WCHL Vail Mountaineers 12U B White",18,0,1,23
+171592,24,8,"WCHL Glenwood 10U A",0,0,1,4
+171593,11,5,"WCHL WEHA WOLVERINES 10U A",8,0,4,22
+171594,12,5,"WCHL Glenwood 10U B",14,0,0,20
+171595,12,5,"WCHL WEHA WOLVERINES 10U B",4,0,2,20
+171596,12,5,"WCHL Summit 10U B Blue",5,0,3,15
+171597,12,5,"WCHL Summit 10U B White",5,0,4,18
+171599,13,5,"WCHL WEHA WOLVERINES 12U A",2,0,0,23
+171600,13,5,"WCHL Aspen Leafs 12U A",13,0,1,22
+171602,14,5,"WCHL WEHA WOLVERINES 12U B",4,0,1,20
+171603,14,5,"WCHL Summit 12U B",10,0,0,25
+171604,14,5,"WCHL Aspen Leafs 12U B",13,0,2,22
+171606,15,5,"WCHL WEHA WOLVERINES 14U A",4,0,2,22
+171607,15,5,"WCHL Aspen Leafs 14U A",22,0,0,23
+171608,16,5,"WCHL Glenwood 14U B",7,0,1,24
+171609,16,5,"WCHL Vail Mountaineers 14U B Blue",15,0,3,23
+171610,16,5,"WCHL Summit 14U B",13,0,1,21
+171611,16,5,"WCHL Aspen Leafs 14U B",18,0,4,27
+171743,24,8,"CCYHL Durango 10U A",1,0,0,3
+171744,24,8,"CCYHL Durango 10U B",0,0,0,0
+171746,24,8,"CCYHL Durango 12U A",3,0,0,3
+171747,24,8,"CCYHL Durango 12U B",0,0,0,0
+171748,24,8,"CCYHL Durango 14U B",0,0,0,0
+171750,11,5,"WCHL Aspen Leafs 10U A",17,0,1,21
+171751,11,5,"WCHL Telluride 10U A",2,0,1,18
+171752,12,5,"WCHL Telluride 10U B",4,0,1,19
+171753,12,5,"WCHL Aspen Leafs 10U B",16,0,1,21
+171754,24,8,"WCHL Vail Mountaineers 12U A Blue",3,0,1,5
+171755,13,5,"WCHL Telluride 12U A",20,0,2,25
+171756,14,5,"WCHL Vail Mountaineers 12U B Blue",20,0,0,22
+171758,14,5,"WCHL Telluride 12U B",5,0,2,21
+171760,15,5,"WCHL Vail Mountaineers 14U A",14,0,2,24
+171762,16,5,"WCHL Telluride 14U B",14,0,3,24
+173286,24,8,"CCYHL Fraser 12U B",2,0,0,2
+174128,24,8,"CCYHL Durango 14U A",0,0,0,0
+192748,24,8,"RMHF Littleton Hawks 10U A White",2,0,0,4
+198133,29,10,"Team GO",3,0,1,6
+198134,29,10,"Gunnison Country Times",2,0,1,6
+198135,27,10,"Dietrich Dirtworks",2,0,0,11
+198136,27,10,Marios,2,0,1,12
+198137,27,10,"Pike Builders",8,0,1,13
+198138,27,10,"Three Rivers Resort",11,0,0,12
+198139,28,10,"Sleightholm Workshop",1,0,1,11
+198140,28,10,"Inn at Tomichi Village",8,0,2,14
+198141,28,10,GVVC,1,0,3,11
+198142,28,10,GVH,7,0,1,11
+198143,28,10,"Gunnison Pizza Company",10,0,1,11
+198144,28,10,EconoLodge,2,0,2,10
+198145,40,14,"Rocky Mountain Trees",9,0,2,15
+198146,40,14,"Alpine Lumber",2,0,3,13
+198147,40,14,Eldo,5,0,2,12
+198148,40,14,"Lacy Construction",9,0,2,14
+198149,40,14,Kochevars,3,0,0,13
+198150,40,14,"Bliss Chiropractic",8,0,1,15
+198151,41,14,REG,3,0,0,11
+198152,41,14,SKA,2,0,2,10
+198153,41,14,"Altitude Painting",7,0,0,12
+198154,41,14,"Talk of the Town",10,0,2,13
+198258,41,14,"CB ELECTRIC",4,0,2,12
+202656,24,8,"Krivo Pee Wee A",0,0,0,2
+202657,24,8,"Boulder Pee Wee A",0,0,1,2
+220833,30,10,DANGLERS,1,0,0,4
+220834,30,10,SQUIDS,4,0,1,5
+220835,30,10,"CB STORM",3,0,0,5
+220836,30,10,REGULATORS,2,0,1,4
+220837,30,10,"DURANGO DARTS",0,0,0,4
+254328,11,5,"WCHL Summit 10U A",7,0,2,21
+254329,13,5,"WCHL Summit 12U A",14,0,1,27
+254330,15,5,"WCHL Summit 14U A",12,0,0,22
+254332,16,5,"WCHL Grand Junction River Hawks 14U B",6,0,1,22
+254333,15,5,"WCHL Steamboat 14U A",6,0,3,18
+254334,13,5,"WCHL Steamboat 12U A",17,0,2,24
+254335,13,5,"WCHL Grand Junction River Hawks 12U A",3,0,3,20
+254336,14,5,"WCHL Grand Junction River Hawks 12U B",3,0,0,23
+254338,11,5,"WCHL Vail Mountaineers 10U A Blue",10,0,1,20
+254339,11,5,"WCHL Vail Mountaineers 10U A White",14,0,2,20
+254340,12,5,"WCHL Vail Mountaineers 10U B Blue",19,0,0,22
+254341,12,5,"WCHL Grand Junction River Hawks 10U B",3,0,1,22
+254342,11,5,"WCHL Grand Junction River Hawks 10U A",8,0,0,22
+254343,14,5,"WCHL Steamboat 12U B",14,0,2,22
+254344,11,5,"WCHL Steamboat 10U A",7,0,1,18
+254345,12,5,"WCHL Steamboat 10U B",10,0,0,19
+254346,12,5,"WCHL Vail Mountaineers 10U B White",18,0,1,23
+254347,13,5,"WCHL Vail Mountaineers 12U A Blue",15,0,1,22
+254348,14,5,"WCHL Vail Mountaineers 12U B White",19,0,2,22
+254350,11,5,"WCHL WEHA WOLVERINES 10U A",3,0,0,19
+254351,11,5,"WCHL Glenwood 10U A",0,0,1,18
+254352,12,5,"WCHL WEHA WOLVERINES 10U B",5,0,2,20
+254353,12,5,"WCHL Summit 10U B Blue",4,0,1,20
+254354,12,5,"WCHL Summit 10U B White",2,0,2,18
+254355,13,5,"WCHL WEHA WOLVERINES 12U A",0,0,1,20
+254356,13,5,"WCHL Aspen Leafs 12U A",9,0,4,21
+254357,14,5,"WCHL WEHA WOLVERINES 12U B",8,0,2,21
+254358,14,5,"WCHL Summit 12U B",6,0,0,22
+254359,14,5,"WCHL Aspen Leafs 12U B",19,0,2,24
+254360,16,5,"WCHL WEHA WOLVERINES 14U B",19,0,0,21
+254361,15,5,"WCHL Aspen Leafs 14U A",10,0,2,21
+254363,16,5,"WCHL Vail Mountaineers 14U B",10,0,1,19
+254364,16,5,"WCHL Summit 14U B",2,0,0,21
+254365,16,5,"WCHL Aspen Leafs 14U B",10,0,0,20
+254366,11,5,"WCHL Durango 10U A",13,0,2,25
+254367,12,5,"WCHL Durango 10U B",29,0,0,31
+254368,13,5,"WCHL Durango 12U A",20,0,4,25
+254369,14,5,"WCHL Durango 12U B",11,0,0,27
+254371,11,5,"WCHL Aspen Leafs 10U A",16,0,0,21
+254372,11,5,"WCHL Telluride 10U A",19,0,1,23
+254373,12,5,"WCHL Telluride 10U B",4,0,1,18
+254374,12,5,"WCHL Aspen Leafs 10U B",10,0,2,20
+254375,24,8,"WCHL Vail Mountaineers 12U A",0,0,0,0
+254376,13,5,"WCHL Telluride 12U A",5,0,0,21
+254377,14,5,"WCHL Vail Mountaineers 12U B Blue",12,0,1,22
+254378,14,5,"WCHL Telluride 12U B",7,0,1,23
+254379,15,5,"WCHL Vail Mountaineers 14U A",15,0,2,20
+254380,15,5,"WCHL Telluride 14U A",13,0,1,25
+254382,15,5,"WCHL Durango 14U A",10,0,1,28
+254383,24,8,"RMHF Littleton Hawks 10U A White",0,0,0,0
+274506,24,8,"DENVER TEAM",0,0,0,0
+281073,5,3,Dietrich,6,0,2,13
+281074,6,3,GVH,9,0,2,15
+281075,5,3,"Inn at Tomichi",4,0,1,13
+281076,5,3,Marios,7,0,3,13
+281077,5,3,"Pike Construction",7,0,3,13
+281078,5,3,"Rocky Mountain Trees",6,0,0,13
+281079,5,3,"Three Rivers Resort",4,0,1,13
+281080,6,3,"All Sports",5,0,2,14
+281081,6,3,"Alpine Lumber",5,0,2,14
+281082,6,3,"CB Electric",10,0,2,15
+281083,6,3,"EconoLodge/QUALITY INN",9,0,1,15
+281085,6,3,"Gunnison Valley Bank",6,0,2,15
+281086,6,3,"Gunnison Valley Vet Clinic",7,0,2,14
+281087,6,3,NuVista,6,0,2,14
+281088,6,3,REG,2,0,2,14
+281089,6,3,"Sleightholm Workshop",4,0,1,14
+281385,7,3,"TEAM GO",1,0,2,9
+281386,7,3,"GUNNISON COUNTRY TIMES",6,0,2,9
+284299,24,8,"RMHF BHC 12U A",0,0,0,0
+289472,24,8,"RMHF Foothills 12U A",1,0,0,2
+299380,24,8,"RMHF Lafayette 14U B",4,0,0,4
+309568,24,8,"RMHF Lafayette 12U A",0,0,0,2
+316777,42,15,"Rocky Mountain Trees",4,0,1,14
+316778,42,15,"Alpine Lumber",4,0,1,14
+316779,42,15,Eldo,8,0,2,14
+316780,42,15,"Lacy Construction",11,0,2,14
+316781,42,15,Kochevars,9,0,0,14
+316782,42,15,"Bliss Chiropractic",3,0,0,14
+316783,43,15,REG,6,0,1,13
+316784,43,15,SKA,4,0,3,13
+316785,43,15,"Altitude Painting",5,0,3,13
+316786,43,15,"Talk of the Town",7,0,4,13
+316787,43,15,"CB ELECTRIC",3,0,5,14
+316788,33,11,"Team GO",5,0,1,11
+316789,33,11,"Gunnison Country Times",2,0,1,11
+316790,31,11,"Dietrich Dirtworks",4,0,1,14
+316791,31,11,Marios,8,0,1,13
+316792,31,11,"Pike Builders",10,0,0,13
+316793,31,11,"Three Rivers Resort",4,0,0,14
+316794,32,11,"Mikey's Pizza",7,0,3,14
+316795,32,11,REG,6,0,4,14
+316797,32,11,GVH,7,0,3,14
+316798,32,11,"Gunnison Pizza",9,0,2,14
+316799,32,11,"QUALITY INN/EconoLodge",0,0,2,14
+316800,34,11,"GOON SQUAD",0,0,0,4
+316801,34,11,SQUIDS,4,0,0,5
+316803,34,11,REGULATORS,4,0,0,5
+316804,34,11,"B&B PRINTERS",1,0,0,4
+319709,24,8,"NMICE 10U A",3,0,0,3
+319710,33,11,GVVC,7,0,2,10
+319711,32,11,Sleightholm,4,0,4,14
+319755,43,15,"GB & T",5,0,4,14
+322144,24,8,"NM Warriors 14U",1,0,1,2
+324035,24,8,"Flagstaff 14U",0,0,0,3
+326950,24,8,"Fraser Valley Eagles 14UB",1,0,0,2
+337591,24,8,"LAHA 12U",0,0,0,0
+337592,24,8,"LAHA 10U Green",0,0,0,0
+337593,24,8,"LAHA 10U Gold",0,0,0,0
+338687,24,8,"LAHA 10U Travel",0,0,0,3
+346130,24,8,"Santa Fe 10U",0,0,0,2
+346131,24,8,"Santa Fe 12U",0,0,0,2
+346132,24,8,"Santa Fe 14U",0,0,0,2
+408093,11,5,"WCHL Summit 10U A",11,8,2,22
+408094,13,5,"WCHL Summit 12U A",13,8,1,22
+408095,15,5,"WCHL Summit 14U A",1,19,2,22
+408096,16,5,"WCHL Grand Junction River Hawks 14U B",1,16,2,19
+408097,15,5,"WCHL Steamboat 14U A",6,15,2,23
+408098,13,5,"WCHL Steamboat 12U A",20,1,1,22
+408099,13,5,"WCHL Grand Junction River Hawks 12U A",1,18,2,21
+408100,14,5,"WCHL Grand Junction River Hawks 12U B",0,20,0,20
+408101,11,5,"WCHL Vail Mountaineers 10U A Blue",14,3,2,19
+408102,11,5,"WCHL Vail Mountaineers 10U A White",8,9,2,19
+408103,12,5,"WCHL Vail Mountaineers 10U B Blue",12,9,1,22
+408104,12,5,"WCHL Grand Junction River Hawks 10U B",12,8,0,20
+408105,11,5,"WCHL Grand Junction River Hawks 10U A",2,13,3,18
+408106,14,5,"WCHL Steamboat 12U B",19,1,2,22
+408107,11,5,"WCHL Steamboat 10U A",13,6,1,20
+408108,12,5,"WCHL Steamboat 10U B - Red",17,2,1,21
+408109,12,5,"WCHL Vail Mountaineers 10U B White",14,7,2,23
+408110,13,5,"WCHL Vail Mountaineers 12U A",19,5,0,24
+408111,14,5,"WCHL Vail Mountaineers 12U B White",6,12,2,20
+408112,11,5,"WCHL WEHA WOLVERINES 10U A",8,9,2,19
+408113,12,5,"WCHL Glenwood 10U B",3,15,0,18
+408114,12,5,"WCHL WEHA WOLVERINES 10U B",2,20,0,22
+408115,24,8,"WCHL Summit 10U B Blue",0,0,0,0
+408116,12,5,"WCHL Summit 10U B",10,10,2,22
+408117,13,5,"WCHL WEHA WOLVERINES 12U A",13,8,3,25
+408118,13,5,"WCHL Aspen Leafs 12U A",8,14,0,22
+408119,14,5,"WCHL WEHA WOLVERINES 12U B",7,17,1,25
+408120,14,5,"WCHL Summit 12U B",9,13,1,23
+408121,14,5,"WCHL Aspen Leafs 12U B",13,8,1,22
+408122,15,5,"WCHL WEHA WOLVERINES 14U A",4,18,0,22
+408123,15,5,"WCHL Aspen Leafs 14U A",18,4,1,23
+408124,16,5,"WCHL Vail Mountaineers 14U B",18,2,0,20
+408125,16,5,"WCHL Summit/Steamboat 14U B",5,16,2,23
+408126,16,5,"WCHL Aspen Leafs 14U B",15,9,0,24
+408127,11,5,"WCHL Durango 10U A",9,12,2,23
+408128,12,5,"WCHL Durango 10U B",8,15,2,25
+408129,13,5,"WCHL Durango 12U A",9,16,2,27
+408130,14,5,"WCHL Durango 12U B",10,17,0,27
+408131,11,5,"WCHL Aspen Leafs 10U A",4,14,1,19
+408132,11,5,"WCHL Telluride 10U A",13,9,2,24
+408133,12,5,"WCHL Telluride 10U B",4,13,1,18
+408134,12,5,"WCHL Aspen Leafs 10U B",7,9,4,20
+408135,24,8,"WCHL Vail Mountaineers 12U A",0,0,0,0
+408136,13,5,"WCHL Telluride 12U A",4,16,2,22
+408137,14,5,"WCHL Vail Mountaineers 12U B Blue",14,3,3,20
+408138,24,8,"WCHL Telluride 12U B",0,0,0,0
+408139,15,5,"WCHL Vail Mountaineers 14U A",21,2,1,24
+408140,15,5,"WCHL Telluride 14U A",17,9,2,28
+408141,15,5,"WCHL Durango 14U A",11,12,3,26
+408142,24,8,"RMHF Littleton Hawks 10U A White",0,0,0,0
+408143,24,8,"DENVER TEAM",0,0,0,0
+408144,24,8,"RMHF BHC 12U A",0,0,0,0
+408145,24,8,"RMHF Foothills 12U A",0,0,0,0
+408146,24,8,"RMHF Lafayette 14U B",0,0,0,0
+408147,24,8,"RMHF Lafayette 12U A",0,0,0,0
+408148,24,8,"NMICE 10U A",3,0,0,3
+408149,24,8,"NM Warriors 14U",0,3,0,3
+408150,24,8,"Flagstaff 14U",0,0,0,0
+408151,24,8,"Fraser Valley Eagles 14UB",0,0,0,0
+408152,24,8,"LAHA 12U",0,0,0,0
+408153,24,8,"LAHA 10U Green",0,0,0,0
+408154,24,8,"LAHA 10U Gold",0,0,0,0
+408155,24,8,"LAHA 10U Travel",0,0,0,0
+408156,24,8,"Santa Fe 10U",0,2,0,2
+408157,24,8,"Santa Fe 12U",0,2,0,2
+408158,24,8,"Santa Fe 14U",0,0,0,0
+410672,14,5,"WCHL Glenwood 12U B",18,6,1,25
+418624,8,4,Dietrich,7,6,1,14
+418625,9,4,GVH,9,4,1,14
+418626,8,4,"Inn at Tomichi",6,6,2,14
+418627,8,4,Marios,8,6,0,14
+418628,8,4,"Pike Construction",8,4,2,14
+418629,8,4,"Rocky Mountain Trees",7,6,1,14
+418630,8,4,"Three Rivers Resort",2,10,2,14
+418631,9,4,SAW,8,4,1,14
+418632,9,4,"Alpine Lumber",6,7,0,13
+418633,9,4,"CB Electric",2,11,0,13
+418634,9,4,"Econo/QUALITY INN",10,4,0,14
+418635,9,4,"Gunnison Bank",4,7,3,14
+418636,9,4,GVVC,11,0,3,14
+418637,9,4,NuVista,7,5,2,14
+418638,9,4,REG,2,9,2,13
+418639,9,4,"Sleightholm Workshop",1,8,4,13
+418640,10,4,"TEAM GO",7,2,2,11
+418641,10,4,"MIKEY'S PIZZA",2,5,4,11
+421034,10,4,PALISADES,4,4,3,11
+421035,10,4,"ALL SPORTS",3,5,3,11
+428923,24,8,"Pikes Peak Catamounts 14U B",4,0,0,4
+428925,15,5,"WCHL Grand Junction River Hawks 14U A",14,10,1,25
+428966,12,5,"WCHL Steamboat 10U B - Black",20,2,0,22
+428990,24,8,TBD,0,0,0,0
+428991,24,8,"TBD - 1",0,0,0,0
+429591,24,8,"RMHF BHC 10B - Black",0,1,1,2
+429769,24,8,"RMHF BHC 10B Green",1,0,1,2
+429773,24,8,"NMICE 14U A",0,0,2,2
+434641,24,8,"NM Warriors 10U",3,0,0,3
+441231,24,8,"Pueblo Bulls 12U Rec",0,1,1,2
+441234,24,8,"Pueblo Bulls 12U A",1,0,1,2
+452379,24,8,"Summit 10U Rec",3,5,0,8
+452380,24,8,"Grand Junction 10U Rec",5,1,0,6
+455012,24,8,"Pikes Peak 12U B",2,0,0,2
+455467,37,12,"Team GO",2,5,2,9
+455468,36,12,"Alpine Lumber",7,2,4,13
+455469,35,12,"Dietrich Dirtworks",9,1,3,13
+455470,35,12,Marios,1,10,2,13
+455471,35,12,"Pike Builders",5,8,0,13
+455472,35,12,"Three Rivers Resort",7,3,3,13
+455474,36,12,REG,2,9,2,13
+455475,36,12,GVH,10,2,1,13
+455476,36,12,SKA,5,4,4,13
+455477,36,12,"QUALITY INN/Econo",0,11,2,13
+455482,36,12,GVVC,8,3,2,13
+455483,36,12,Sleightholm,6,4,3,13
+455484,44,16,"Rocky Mountain Trees",6,4,2,12
+455485,44,16,"Alpine Lumber",3,6,2,11
+455486,44,16,Eldo,4,9,0,13
+455487,44,16,"Lacy Construction",4,7,1,12
+455488,44,16,Kochevars,9,3,0,12
+455489,44,16,"Bliss Chiropractic",7,4,1,12
+455490,45,16,REG,12,1,0,13
+455491,45,16,SKA,5,7,0,12
+455492,45,16,"Altitude Painting",1,9,1,11
+455493,45,16,"Talk of the Town",6,4,2,12
+455494,45,16,"CB ELECTRIC",3,7,2,12
+455495,45,16,"GB & T",5,4,3,12
+456183,24,8,"Durango 10U REC",0,4,0,4
+458404,24,8,"WEHA 10U Rec",0,0,0,0
+463744,37,12,Palisades,7,0,2,9
+463745,37,12,"All Sports",0,6,3,9
+463820,37,12,"Mikey's Pizza",5,3,1,9
+463821,36,12,SAW,4,7,2,13
+463874,24,8,"NM Warriors 12U",2,1,0,3
+466195,24,8,"Arvada 10U Rec Gold",2,0,0,2
+496238,38,12,Regulators,5,0,0,5
+496239,38,12,Goons,0,4,0,4
+496240,38,12,Storm,2,3,0,5
+496241,38,12,Squids,2,2,0,4
