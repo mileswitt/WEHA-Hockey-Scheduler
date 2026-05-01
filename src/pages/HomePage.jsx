@@ -1,3 +1,4 @@
+// src/pages/HomePage.jsx
 import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import UpcomingEvents from '../components/UpcomingEvents'

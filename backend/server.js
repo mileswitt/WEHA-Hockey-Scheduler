@@ -288,19 +288,25 @@ app.get("/api/localdivisions", async (req, res) => {
   }
 });
 
+// Get players with full stats for a specific team
 app.get("/api/players/:teamID", async (req, res) => {
-  try {
+  try 
+  {
     const teamID = parseInt(req.params.teamID);
     const [rows] = await db.query(`
-      SELECT DISTINCT p.PlayerID, p.FirstName, p.LastName, 
-             p.Position, p.JerseyNumber, p.Goals, p.Assists, p.GamesPlayed
+      SELECT DISTINCT p.PlayerID, p.FirstName, p.LastName,
+             p.Position, p.JerseyNumber, p.Goals, p.Assists, 
+             p.GamesPlayed, p.Ppg,
+             (p.Goals + p.Assists) AS Points
       FROM player p
       JOIN playerteam pt ON p.PlayerID = pt.PlayerID
       WHERE pt.TeamID = ?
-      ORDER BY p.LastName, p.FirstName
+      ORDER BY Points DESC, p.Goals DESC, p.LastName
     `, [teamID]);
     res.json(rows);
-  } catch (err) {
+  } 
+  catch (err) 
+  {
     console.error("Error fetching players:", err);
     res.status(500).json({ error: "Failed to fetch players" });
   }

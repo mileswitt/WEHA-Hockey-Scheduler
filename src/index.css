@@ -11,4 +11,6 @@ html, body, #root {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  background-color: #0f2b46;  /* ← add this */
+  overflow-x: hidden;          /* ← prevents horizontal scroll on mobile */
 }

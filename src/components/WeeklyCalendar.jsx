@@ -1,82 +1,7 @@
 // import FullCalendar from "@fullcalendar/react";
 // import timeGridPlugin from "@fullcalendar/timegrid";
 // import interactionPlugin from "@fullcalendar/interaction";
-
-
-// const WeeklyCalendar = () => {
-//   return (
-//     <div style={{
-//       backgroundColor: "#0f2b46",
-//       width: "100%",
-//       padding: "48px 24px",
-//       boxSizing: "border-box",
-//     }}>
-//       <style>{`
-//         .fc-wrapper .fc { width: 100% !important; }
-//         .fc-wrapper .fc-view-harness { width: 100% !important; }
-//         .fc-wrapper table { width: 100% !important; }
-//         .weekly-cal-title {
-//           font-size: 1.5rem;
-//           font-weight: bold;
-//           text-align: center;
-//           color: white;
-//           margin-bottom: 24px;
-//         }
-//       `}</style>
-
-//       <h2 className="weekly-cal-title">Weekly Schedule</h2>
-
-//       <div style={{
-//         backgroundColor: "#1f2937",
-//         borderRadius: "12px",
-//         padding: "24px",
-//         width: "100%",
-//         maxWidth: "1100px",
-//         margin: "0 auto",
-//         boxSizing: "border-box",
-//         overflow: "hidden",
-//       }}
-//         className="fc-wrapper"
-//       >
-//         <FullCalendar
-//           plugins={[timeGridPlugin, interactionPlugin]}
-//           initialView="timeGridWeek"
-//           height="auto"
-//           expandRows={true}
-//           headerToolbar={{
-//             left: "prev,next today",
-//             center: "title",
-//             right: ""
-//           }}
-//           events={[
-//             {
-//               title: "Varsity Practice",
-//               start: "2026-03-02T16:00:00",
-//               end:   "2026-03-02T18:00:00",
-//               color: "#c21537",
-//             },
-//             {
-//               title: "JV Practice",
-//               start: "2026-03-03T15:00:00",
-//               end:   "2026-03-03T17:00:00",
-//               color: "#1d4ed8",
-//             },
-//             {
-//               title: "Home Game",
-//               start: "2026-03-05T19:00:00",
-//               end:   "2026-03-05T21:00:00",
-//               color: "#16a34a",
-//             }
-//           ]}
-//         />
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default WeeklyCalendar
-// src/components/WeeklyCalendar.jsx
-// Shows this week's games pulled from the database
+// Mobile responsive weekly schedule calendar
 
 import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
@@ -84,7 +9,6 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { fetchGames } from "../api/fetchApiData";
 
-// Division colors — matches LeagueCalendar for consistency
 const DIVISION_COLORS = {
   "A League":   "#2ecc71",
   "B League":   "#3aa8d8",
@@ -99,18 +23,23 @@ const DIVISION_COLORS = {
   "14U B":      "#c0392b",
 };
 
-// Returns division color or default red if not found
 function getDivColor(division) {
   return DIVISION_COLORS[division] || "#c21537";
 }
 
 const WeeklyCalendar = () => {
-  // Stores calendar events built from DB schedule
-  const [events, setEvents] = useState([]);
+  const [events,  setEvents]  = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState(null);
+  const [error,   setError]   = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Fetch schedule from backend on mount
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   useEffect(() => {
     fetchGames()
       .then(data => {
@@ -128,102 +57,83 @@ const WeeklyCalendar = () => {
         setEvents(calendarEvents);
         setLoading(false);
       })
-      .catch(() => {
-        setError("Failed to load schedule");
-        setLoading(false);
-      });
+      .catch(() => { setError("Failed to load schedule"); setLoading(false); });
   }, []);
 
   return (
     <div style={{
       backgroundColor: "#0f2b46",
-      width: "100%",
-      padding: "48px 24px",
-      boxSizing: "border-box",
+      width:           "100%",
+      padding:         isMobile ? "32px 12px" : "48px 24px",
+      boxSizing:       "border-box",
     }}>
       <style>{`
-      .fc-wrapper .fc { width: 100% !important; }
-      .fc-wrapper .fc-view-harness { width: 100% !important; }
-      .fc-wrapper table { width: 100% !important; }
-      .weekly-cal-title {
-        font-size: 1.5rem;
-        font-weight: bold;
-        text-align: center;
-        color: white;
-        margin-bottom: 24px;
-      }
-      .fc-event-title { font-size: 11px; }
-      .fc-timegrid-slot { height: 40px !important; }
-
-      /* Fix day headers */
-      .fc-col-header { background: #1a2535 !important; }
-      .fc-col-header-cell { background: #1a2535 !important; border-color: rgba(255,255,255,0.08) !important; }
-      .fc-col-header-cell-cushion {
-        color: #fff !important;
-        font-size: 13px !important;
-        font-family: system-ui, sans-serif !important;
-        font-weight: 600 !important;
-        text-decoration: none !important;
-        padding: 8px 0 !important;
-        display: block !important;
-      }
-
-      /* Fix time slots and general calendar colors */
-      .fc-timegrid-axis { background: #1f2937 !important; }
-      .fc-timegrid-slot-label { color: rgba(255,255,255,0.5) !important; font-size: 11px !important; }
-      .fc-scrollgrid, .fc-scrollgrid td, .fc-scrollgrid th { border-color: rgba(255,255,255,0.08) !important; }
-      .fc-toolbar-title { color: #fff !important; }
-      .fc-button { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; border-radius: 6px !important; }
-      .fc-button:hover { background: rgba(255,255,255,0.22) !important; }
-      .fc-timegrid-col { background: #1f2937 !important; }
-      .fc-day-today { background: #243044 !important; }
-      .fc-timegrid-col.fc-day-today { background: #243044 !important; }
-    `}</style>
+        .fc-wrapper .fc { width: 100% !important; }
+        .fc-wrapper .fc-view-harness { width: 100% !important; }
+        .fc-wrapper table { width: 100% !important; }
+        .weekly-cal-title {
+          font-size: clamp(1.1rem, 4vw, 1.5rem);
+          font-weight: bold;
+          text-align: center;
+          color: white;
+          margin-bottom: 20px;
+        }
+        .fc-event-title { font-size: 10px; }
+        .fc-timegrid-slot { height: 36px !important; }
+        .fc-col-header { background: #1a2535 !important; }
+        .fc-col-header-cell { background: #1a2535 !important; border-color: rgba(255,255,255,0.08) !important; }
+        .fc-col-header-cell-cushion {
+          color: #fff !important; font-size: 12px !important;
+          font-family: system-ui, sans-serif !important; font-weight: 600 !important;
+          text-decoration: none !important; padding: 6px 0 !important; display: block !important;
+        }
+        .fc-timegrid-axis { background: #1f2937 !important; }
+        .fc-timegrid-slot-label { color: rgba(255,255,255,0.5) !important; font-size: 10px !important; }
+        .fc-scrollgrid, .fc-scrollgrid td, .fc-scrollgrid th { border-color: rgba(255,255,255,0.08) !important; }
+        .fc-toolbar-title { color: #fff !important; font-size: clamp(13px, 3vw, 18px) !important; }
+        .fc-button { background: rgba(255,255,255,0.12) !important; border: 1px solid rgba(255,255,255,0.2) !important; color: #fff !important; border-radius: 6px !important; font-size: 12px !important; padding: 4px 8px !important; }
+        .fc-button:hover { background: rgba(255,255,255,0.22) !important; }
+        .fc-timegrid-col { background: #1f2937 !important; }
+        .fc-day-today { background: #243044 !important; }
+        .fc-timegrid-col.fc-day-today { background: #243044 !important; }
+        @media (max-width: 768px) {
+          .fc-timegrid-slot { height: 28px !important; }
+          .fc-event-title { font-size: 8px !important; }
+        }
+      `}</style>
 
       <h2 className="weekly-cal-title">Weekly Schedule</h2>
 
-      {/* Loading state while fetch is in progress */}
-      {loading && (
-        <p style={{ textAlign: "center", color: "white" }}>
-          Loading schedule...
-        </p>
-      )}
+      {loading && <p style={{ textAlign: "center", color: "white" }}>Loading schedule...</p>}
+      {error   && <p style={{ textAlign: "center", color: "#f87171" }}>{error}</p>}
 
-      {/* Error state if fetch failed */}
-      {error && (
-        <p style={{ textAlign: "center", color: "#f87171" }}>
-          {error}
-        </p>
-      )}
-
-      {/* Calendar renders only when data is ready */}
       {!loading && !error && (
-        <div
-          className="fc-wrapper"
-          style={{
-            backgroundColor: "#1f2937",
-            borderRadius: "12px",
-            padding: "24px",
-            width: "100%",
-            maxWidth: "1100px",
-            margin: "0 auto",
-            boxSizing: "border-box",
-            overflow: "hidden",
-          }}
-        >
+        <div className="fc-wrapper" style={{
+          backgroundColor: "#1f2937",
+          borderRadius:    "12px",
+          padding:         isMobile ? "12px 8px" : "24px",
+          width:           "100%",
+          maxWidth:        "1100px",
+          margin:          "0 auto",
+          boxSizing:       "border-box",
+          overflow:        "hidden",
+        }}>
           <FullCalendar
             plugins={[timeGridPlugin, interactionPlugin]}
-            initialView="timeGridWeek"
+            initialView={isMobile ? "timeGridDay" : "timeGridWeek"}
             height="auto"
             expandRows={true}
             headerToolbar={{
               left:   "prev,next today",
               center: "title",
-              right:  ""
+              right:  isMobile ? "timeGridDay,timeGridWeek" : "",
+            }}
+            views={{
+              timeGridDay:  { buttonText: 'Day'  },
+              timeGridWeek: { buttonText: 'Week' },
             }}
             events={events}
-            dayHeaderFormat={{weekday: 'long'}}
-            // Add rink info as a tooltip on hover
+            dayHeaderFormat={{ weekday: isMobile ? 'short' : 'long' }}
             eventDidMount={info => {
               info.el.title = `${info.event.extendedProps.division} · ${info.event.extendedProps.rink}`;
             }}
@@ -235,3 +145,5 @@ const WeeklyCalendar = () => {
 };
 
 export default WeeklyCalendar;
+
+
