@@ -1,0 +1,8 @@
+# Python dependencies for the web scraper.
+# Install with: pip install -r requirements.txt
+# (Run from the project root with the .venv active)
+
+Scrapy==2.14.2
+python-dotenv==1.2.2
+requests==2.32.5
+mysql-connector-python==9.3.0
